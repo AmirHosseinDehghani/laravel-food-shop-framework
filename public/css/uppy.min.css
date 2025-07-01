@@ -1,0 +1,40 @@
+.uppy-Root {
+    box-sizing: border-box;
+    font-family: 'Vazir', sans-serif;
+    text-align: center;
+    color: white;
+    background: linear-gradient(to right, #f3a3bc, #6c5ce7);
+}
+
+.uppy-c-btn-primary {
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: linear-gradient(to right, #ff5c8d, #ff4064);
+    color: white;
+    border: none;
+    transition: all 0.3s;
+}
+
+.uppy-c-btn-primary:hover {
+    background: linear-gradient(to right, #ff4064, #ff1e50);
+    transform: scale(1.05);
+}
+
+.uppy-StatusBar {
+    background: linear-gradient(to right, #f3a3bc, #6c5ce7);
+    color: white;
+}
+
+.uppy-Dashboard {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.uppy-Informer p {
+    background: #ff5c8d;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+}
