@@ -35,7 +35,8 @@ class UserController extends Controller
             session(['user' => $user]);
             return redirect()->route('dashboard');
         }
-        return back()->withErrors(['error' => 'ایمیل یا رمز عبور اشتباه است.']);
+        return back()->withErrors(['error' => __('auth.invalid_credentials')]);
+
     }
 
 
@@ -56,7 +57,8 @@ class UserController extends Controller
     public function register(SignupRequest $request)
     {
         User::create($request->validated() + ['password' => Hash::make($request->password)]);
-        return redirect()->route('login')->with('success', 'ثبت ‌نام با موفقیت انجام شد!');
+        return redirect()->route('login')->with('success', __('register.success'));
+
     }
 
 

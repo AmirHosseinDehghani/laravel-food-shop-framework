@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddOrderRequest;
 use App\Models\Basket;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class ShopBasketController extends Controller
@@ -36,11 +38,11 @@ class ShopBasketController extends Controller
         return redirect()->route('manage.basket')->with('success', 'آیتم سبد خرید شما حذف شد.');
     }
 
-    public function addOrder()
+    public function addOrder(AddOrderRequest $request)
     {
         $total = 0;
         $productIds = [];
-
+        $address = $request->validated();
         $shopBaskets = Basket::where('buyer', session('user')->id)->get();
         foreach ($shopBaskets as $basket) {
             $productIds[] = $basket->product;
@@ -50,7 +52,8 @@ class ShopBasketController extends Controller
         Order::create([
             'buyer' => session('user')->id,
             'baskets' => $productIds, // آرایه به صورت json ذخیره میشه
-            'price' => $total
+            'price' => $total,
+            'adders' =>$address['adders']
         ]);
 
         return redirect()->route('manage.basket')->with('success', 'سفارش شما ثبت شد . برای پرداخت و پیگیری جزییات به بخش سفارشات بروید.');

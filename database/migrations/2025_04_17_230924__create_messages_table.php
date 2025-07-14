@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->id(); // شناسه اصلی
+            $table->id();
             $table->integer('sender');
             $table->integer('receiver');
             $table->string('subject');

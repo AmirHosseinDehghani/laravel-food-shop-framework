@@ -18,7 +18,7 @@
                         <!-- Striped rows -->
 
                         <!-- Bordered table -->
-                        <div class="col-md-6 my-4">
+                        <div class="col-md-8 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h5 class="card-title">1. لیست سفارشات </h5>
@@ -27,37 +27,43 @@
                                         <thead class="thead-dark">
                                         <tr>
                                             <th>شماره سفارش</th>
+                                            <th>نام محصول</th>
                                             <th>قیمت کل</th>
+                                            <th>آدرس</th>
+                                            <th>تعداد</th>
                                             <th>وضعیت سفارش</th>
-                                            <th>تغییر سفارش</th>
+                                            <th>ارسال محصول</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(($orders) && count($orders) > 0)
-                                            @foreach($orders as $order)
+                                        @if(($products) && count($products) > 0)
+                                            @foreach($products as $product)
 
                                                 <tr class="table-success">
-                                                    <td>{{$order->id}}</td>
-                                                    <td>{{ number_format($order->price)}}</td>
+                                                    <td>{{$product->order}}</td>
+                                                    <td>{{$product->name}}</td>
+                                                    <td>{{ number_format($product->price)}}</td>
+                                                    <td>{{ $product->adders}}</td>
+                                                    <td>{{ $product->total_quantity }}</td>
                                                     <td>
                                                         {{
-                                                            $order->type == 'pay' ? 'پرداخت شد' :
-                                                            ($order->type == 'dont_pay' ? 'پرداخت نشده' :
-                                                            ($order->type == 'send' ? 'ارسال شد' :
-                                                            ($order->type == 'receive' ? 'دریافت شد' : $order->type)))
+                                                            $product->type == 'pay' ? 'پرداخت شد' :
+                                                            ($product->type == 'dont_pay' ? 'پرداخت نشده' :
+                                                            ($product->type == 'send' ? 'ارسال شد' :
+                                                            ($product->type == 'receive' ? 'دریافت شد' : $product->type)))
                                                         }}
                                                     </td>
-                                                    @if($order->type == 'send')
+                                                    @if($product->type == 'send')
                                                         <td colspan="5" class="text-center">ارسال شده</td>
                                                     @endif
-                                                    @if($order->type == 'receive')
+                                                    @if($product->type == 'receive')
                                                         <td colspan="5" class="text-center">دریافت شده</td>
                                                     @endif
-                                                    @if($order->type == 'pay')
+                                                    @if($product->type == 'pay')
                                                         <td>
                                                             <button type="submit" class="btn btn-info"><a
                                                                     style="color: white"
-                                                                    href="{{ route('change.type' , $order->id) }}">ارسال</a>
+                                                                    href="{{ route('change.type', ['id' => $product->id, 'order' => $product->order]) }}">ارسال</a>
                                                             </button>
                                                         </td>
                                                     @endif
@@ -74,7 +80,7 @@
                                 </div>
                             </div>
                         </div> <!-- Bordered table -->
-                        <div class="col-md-6 my-4">
+                        <div class="col-md-4 my-4">
                             <div class="card shadow">
                                 <div class="card-body d-flex justify-content-center align-items-center">
                                     <img src="{{ asset('img/logo.jpg') }}" alt="Logo">

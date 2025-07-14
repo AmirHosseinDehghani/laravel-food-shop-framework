@@ -62,11 +62,12 @@ Route::get('/category/manage/', [CategoryController::class, 'manage'])->name('ca
 Route::get('/buyer/add/basket/{id}', [ShopBasketController::class, 'store'])->name('add.basket')->middleware('check.login');
 Route::get('/buyer/delete/basket/{id}', [ShopBasketController::class, 'delete'])->name('delete.basket');
 Route::get('/buyer/basket', [ShopBasketController::class, 'manage'])->name('manage.basket');
-Route::get('/buyer/add/order', [ShopBasketController::class, 'addOrder'])->name('add.order')->middleware('check.login');
+Route::post('/buyer/add/order', [ShopBasketController::class, 'addOrder'])->name('add.order')->middleware('check.login');
 
 
 Route::get('/buyer/manage/order', [OrderController::class, 'manage'])->name('manage.order');
 Route::get('/buyer/pay/order', [OrderController::class, 'pay'])->name('pay.order');
 Route::get('/seller/manage/order', [OrderController::class, 'seller'])->name('seller.order');
-Route::get('/order/change/type/{id}', [OrderController::class, 'changeType'])->name('change.type');
+Route::get('/order/change/type/{id}/{order}', [OrderController::class, 'changeType'])->name('change.type');
 Route::get('/order/factor/{id}', [OrderController::class, 'factor'])->name('factor');
+Route::get('/order/receive/{id}', [OrderController::class, 'receive'])->name('receive');

@@ -35,15 +35,16 @@ class SignupRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'لطفا نام خود را وارد کنید',
-            'family.required' => 'لطفاً نام خانوادگی خود را وارد کنید.',
-            'email.required' => 'لطفاً نام خانوادگی خود را وارد کنید.',
-            'email.unique' => 'این ایمیل قبلا انتخاب شده اس . لطفا ایمیل دیگری انتخاب کنید .',
-            'password.required' => 'لطفاً رمز عبور خود را وارد کنید.',
-            'password.confirmed' => 'رمز عبور و تاییدیه آن باید یکی باشد.',
-            'password.min' => 'رمز عبور حداقل باید 8 کاراکتر باشد',
-            'captcha.captcha' => 'کد امنیتی اشتباه است',
-            'captcha.required' => 'کد امنیتی را وارد کنید ',
+            'name.required'     => __('register.name_required'),
+            'family.required'   => __('register.family_required'),
+            'email.required'    => __('register.email_required'),
+            'email.unique'      => __('register.email_unique'),
+            'password.required' => __('register.password_required'),
+            'password.confirmed'=> __('register.password_confirmed'),
+            'password.min'      => __('register.password_min'),
+            'captcha.required'  => __('register.captcha_required'),
+            'captcha.captcha'   => __('register.captcha_invalid'),
         ];
     }
+
 }

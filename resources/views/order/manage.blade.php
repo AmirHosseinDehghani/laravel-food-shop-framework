@@ -15,9 +15,8 @@
                         </div>
                     @endif
                     <div class="row">
-                        <!-- Striped rows -->
 
-                        <!-- Bordered table -->
+
                         <div class="col-md-7 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
@@ -28,8 +27,10 @@
                                         <tr>
                                             <th>شماره سفارش</th>
                                             <th>قیمت کل</th>
+                                            <th>کد رهگیری پستی</th>
                                             <th>صدور فاکتور</th>
                                             <th>وضعیت سفارش</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -38,6 +39,7 @@
                                                 <tr class="table-success">
                                                     <td>{{$order->id}}</td>
                                                     <td>{{ number_format($order->price)}}</td>
+                                                    <td></td>
                                                     <td>
                                                         <button type="submit" class="btn btn-info"><a
                                                                 style="color: white"
@@ -49,7 +51,7 @@
                                                         <td>
                                                             <button type="submit" class="btn btn-info"><a
                                                                     style="color: white"
-                                                                    href="{{ route('change.type' , $order->id) }}">دریافت
+                                                                    href="{{ route('receive' , $order->id) }}">دریافت
                                                                     شد </a>
                                                             </button>
                                                         </td>
@@ -73,7 +75,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div> <!-- Bordered table -->
+                        </div>
                         <div class="col-md-5 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
@@ -113,12 +115,11 @@
                                     </table>
                                 </div>
                             </div>
-                        </div> <!-- Expandable rows -->
-                    </div> <!-- end section -->
-
-                </div> <!-- .col-12 -->
-            </div> <!-- .row -->
-        </div> <!-- .container-fluid -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">

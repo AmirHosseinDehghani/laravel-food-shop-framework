@@ -8,29 +8,27 @@ class LoginRequest extends FormRequest
 {
     public function authorize()
     {
-        // اجازه دسترسی به همه کاربران
         return true;
     }
 
     public function rules()
     {
         return [
-            'email' => 'required|email|exists:users,email', // بررسی وجود ایمیل در جدول users
-            'password' => 'required|string|min:8', // بررسی اعتبار پسورد
-          //
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:8',
+            'captcha' => 'required|captcha',
         ];
     }
 
-    // در صورت تمایل می‌توانیم پیام‌های خطا را هم سفارشی کنیم
     public function messages()
     {
         return [
-            'email.exists'=>'ایمیل در پایگاه داده موجود نیست',
-            'email.required' => 'لطفاً ایمیل خود را وارد کنید.',
-            'password.required' => 'لطفاً رمز عبور خود را وارد کنید.',
-            'password.min' => 'رمز عبور حداقل باید 8 کاراکتر باشد',
-            'captcha.captcha' => 'کد امنیتی اشتباه است',
-            'captcha.required' => 'کد امنیتی را وارد کنید ',
+            'email.exists' => __('LoginRequestLang.email_exists'),
+            'email.required' => __('LoginRequestLang.email_required'),
+            'password.required' => __('LoginRequestLang.password_required'),
+            'password.min' => __('LoginRequestLang.password_min'),
+            'captcha.captcha' => __('LoginRequestLang.captcha_invalid'),
+            'captcha.required' => __('LoginRequestLang.captcha_required'),
         ];
     }
 }

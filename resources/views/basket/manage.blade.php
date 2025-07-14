@@ -18,7 +18,7 @@
                         <!-- Striped rows -->
 
                         <!-- Bordered table -->
-                        <div class="col-md-6 my-4">
+                        <div class="col-md-5 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h5 class="card-title">1. سبد خرید </h5>
@@ -63,16 +63,19 @@
                                 </div>
                             </div>
                         </div> <!-- Bordered table -->
-                        <div class="col-md-6 my-4">
+                        <div class="col-md-7 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
                                     <h5 class="card-title">2. ثبت سفارش</h5>
+                                    <form action="{{ route('add.order') }}" method="post" >
+                                        @csrf
                                     <table class="table table-sm table-hover table-borderless">
                                         <thead class="thead-dark">
                                         <tr>
                                             <th>تعداد کالا ها</th>
                                             <th>قیمت کل</th>
-                                            <th>ثبت کل | حذف کل</th>
+                                            <th>آدرس</th>
+                                            <th>ثبت کل </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -80,14 +83,10 @@
                                             <tr class="table-warning">
                                                 <td>{{$number}}</td>
                                                 <td>{{number_format($total)}}</td>
+                                                <td> <input class="form-control" name="adders"></td>
                                                 <td>
                                                     <button type="submit" class="btn btn-info"><a
-                                                            style="color: white"
-                                                            href="{{ route('add.order') }}">ثبت </a>
-                                                    </button>
-                                                    <button type="submit" class="btn btn-danger"><a
-                                                            style="color: white"
-                                                            href="{{ route('home') }}">  حذف  </a>
+                                                            style="color: white">ثبت </a>
                                                     </button>
                                                 </td>
 
@@ -99,6 +98,7 @@
                                         @endif
                                         </tbody>
                                     </table>
+                                    </form>
                                 </div>
                             </div>
                         </div> <!-- Expandable rows -->

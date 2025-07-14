@@ -11,11 +11,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id(); // شناسه اصلی
+            $table->id();
             $table->integer('buyer');
             $table->integer('price');
+            $table->text('adders');
+            $table->integer('post')->nullable();
             $table->json('baskets');
-            $table->enum('type', ['pay', 'dont_pay', 'send', 'dont_send', 'receive'])->default('dont_pay'); // نوع کاربر (خریدار، فروشنده، مدیر)
+            $table->json('ready_products')->nullable();
+            $table->enum('type', ['dont_pay','pay','send','receive'])->default('dont_pay');
             $table->timestamps();
         });
     }

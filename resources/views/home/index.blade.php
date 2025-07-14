@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فروشگاه مواد غذایی</title>
     <link rel="stylesheet" href="{{ asset('css/simplebar.css') }}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
@@ -639,33 +640,261 @@
             font-size: 20px;
             text-decoration: none;
         }
+        .page-links-bar {
+            margin-top: 25px;
+            background: #eeeeee;
+            border-radius: 15px 15px 0 0;
+            padding: 12px 0;
+            width: 80%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-links-bar nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+
+        .page-links-bar nav a {
+            color: #333;
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 18px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .page-links-bar nav a:hover {
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .page-links-bar nav a:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            left: 100%;
+            top: 25%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 1px;
+            background-color: #ccc;
+            opacity: 0.5;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            padding: 25px;
+            animation: fadeSlideUp 0.4s ease;
+            position: relative;
+            text-align: right;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .modal-close:hover {
+            color: #000;
+        }
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .search-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.3s ease-in-out;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .search-box input {
+            width: 80%;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: #0056b3;
+        }
+
+        .search-result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .search-result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .product-preview {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .close-btn {
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #c82333;
+        }
+        body.dark-mode {
+            background-color: #121212; /* مشکی خیلی تیره */
+            color: #e0e0e0; /* خاکستری روشن برای متن */
+        }
+
+        body.dark-mode header {
+            background-color: #1f1f1f; /* خاکستری خیلی تیره برای هدر */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        body.dark-mode .categories-title {
+            color: #ffffff; /* تایتل دسته‌بندی واضح و سفید */
+        }
+
+        body.dark-mode .product-card {
+            background-color: #222222; /* کارت محصولات تیره‌تر */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+            color: #f0f0f0; /* متن داخل کارت‌ها روشن‌تر */
+        }
+
+        body.dark-mode a,
+        body.dark-mode a:hover {
+            color: #bb86fc; /* لینک‌ها رنگ بنفش روشن */
+        }
+
+        body.dark-mode .add-to-cart {
+            background: linear-gradient(135deg, #3700b3, #6200ee);
+            color: white;
+        }
+
+        body.dark-mode .back-to-top {
+            background: linear-gradient(135deg, #3700b3, #6200ee);
+        }
+
+        body.dark-mode main {
+            text-color: #f0f0f0; /* متن روشن و نزدیک سفید */
+        }
+
 
     </style>
 </head>
 <body>
 <div class="preloader">
     <div class="preloader-spinner"></div>
-    <div class="preloader-text">در حال بارگذاری فروشگاه...</div>
+    <div class="preloader-text">{{ __('home.loading_store') }}</div>
 </div>
 <header class="animate__animated animate__fadeInDown">
     <div class="container">
         <div class="header-top">
-            <div class="logo">فروشگاه بزرگ محصولات غذایی </div>
+            <div class="logo">{{ __('home.store_title') }}</div>
             @if (session('success'))
                 <div class="alert alert-success fade-in auto-dismiss">
                     <i class="fe fe-check-circle mr-2"></i>
                     {{ session('success') }}
                 </div>
             @endif
+
             @if(!empty(session('user')))
                 <div class="auth-buttons">
-                    <a href="{{ route('logout') }}" class="auth-btn signup-btn animate__animated animate__fadeInRight animate__delay-1s">خروج از حساب</a>
-                    <a href="{{ route('dashboard') }}" class="auth-btn login-btn animate__animated animate__fadeInRight">خانه</a>
+                    <a href="{{ route('logout') }}" class="auth-btn signup-btn animate__animated animate__fadeInRight animate__delay-1s">{{ __('home.logout') }}</a>
+                    <a href="{{ route('dashboard') }}" class="auth-btn login-btn animate__animated animate__fadeInRight">{{ __('home.dashboard') }}</a>
+                    <a href="#" id="toggleDarkMode" title="{{ __('home.dark_mode') }}" style="cursor:pointer; font-size: 20px; margin-right:10px; color: var(--primary-color);">
+                        🌙
+                    </a>
                 </div>
             @else
                 <div class="auth-buttons">
-                    <a href="{{ route('login') }}" class="auth-btn login-btn animate__animated animate__fadeInRight">ورود</a>
-                    <a href="{{ route('register') }}" class="auth-btn signup-btn animate__animated animate__fadeInRight animate__delay-1s">ثبت‌نام</a>
+                    <a href="{{ route('login') }}" class="auth-btn login-btn animate__animated animate__fadeInRight">{{ __('home.login') }}</a>
+                    <a href="{{ route('register') }}" class="auth-btn signup-btn animate__animated animate__fadeInRight animate__delay-1s">{{ __('home.register') }}</a>
+                    <a href="#" id="toggleDarkMode" title="{{ __('home.dark_mode') }}" style="cursor:pointer; font-size: 20px; margin-right:10px; color: var(--primary-color);">
+                        🌙
+                    </a>
                 </div>
             @endif
         </div>
@@ -674,31 +903,40 @@
             <button class="category-nav-btn next"><i class="fas fa-chevron-left"></i></button>
             <div class="categories animate__animated animate__fadeInUp animate__delay-1s">
                 <ul class="categories-nav">
-                    <li class="active" data-category="all">همه محصولات</li>
+                    <li class="active" data-category="all">{{ __('home.all_products') }}</li>
                     @foreach($categories as $category)
                         <li data-category="{{$category->name}}">{{$category->name}}</li>
                     @endforeach
                 </ul>
             </div>
         </div>
+        <div class="page-links-bar">
+            <nav>
+                <a href="#" onclick="openModal('rules')">{{ __('home.rules') }}</a>
+                <a href="#" onclick="openModal('contact')">{{ __('home.contact') }}</a>
+                <a href="#" onclick="openModal('blog')">{{ __('home.blog') }}</a>
+                <a href="#" onclick="openModal('me')">{{ __('home.about_us') }}</a>
+                <a href="#" id="openSearchBox">{{ __('home.search') }}</a>
+            </nav>
+        </div>
     </div>
 </header>
 <main class="container">
     <section class="products-section category-content active" id="all">
-        <h2 class="section-title animate__animated animate__fadeInRight">همه محصولات</h2>
+        <h2 class="section-title animate__animated animate__fadeInRight">{{ __('home.all_products') }}</h2>
         <div class="products-grid">
             @foreach($products as $product)
                 <div class="product-card animate__animated animate__fadeInUp">
-                    <div class="product-badge animate__animated animate__pulse animate__infinite">جدید</div>
+                    <div class="product-badge animate__animated animate__pulse animate__infinite">{{ __('home.new') }}</div>
                     <div class="product-info">
                         <h3 class="product-title">{{$product->name}}</h3>
                         @foreach($shops as $shop)
                             @if($shop->id == $product->shop)
-                                <h3 class="product-title"> فروش در {{$shop->name}}  </h3>
+                                <h3 class="product-title"> {{ __('home.sale_in') }} {{$shop->name}}  </h3>
                             @endif
                         @endforeach
-                        <span class="product-price">{{number_format($product->price) }} تومان</span>
-                        <button class="add-to-cart" ><a style="color: white" href="{{ route('add.basket',  $product->id) }}" >ثبت در سبد خرید</a></button>
+                        <span class="product-price">{{ number_format($product->price) }} {{ __('home.price_unit') }}</span>
+                        <button class="add-to-cart"><a style="color: white" href="{{ route('add.basket',  $product->id) }}">{{ __('home.add_to_cart') }}</a></button>
                     </div>
                 </div>
             @endforeach
@@ -706,21 +944,21 @@
     </section>
     @foreach($categories as $category)
         <section class="products-section category-content" id="{{$category->name}}">
-            <h2 class="section-title">محصولات {{$category->name}}</h2>
+            <h2 class="section-title"> {{$category->name}}</h2>
             <div class="products-grid">
                 @foreach($products as $product)
                     @if($product->shop == $category->id)
                         <div class="product-card">
-                            <div class="product-badge">تخفیف ویژه</div>
+                            <div class="product-badge">{{ __('home.special_offer') }}</div>
                             <div class="product-info">
                                 <h3 class="product-title">{{$product->name}}</h3>
                                 @foreach($shops as $shop)
                                     @if($shop->id == $product->shop)
-                                        <h3 class="product-title"> فروش در {{$shop->name}}  </h3>
+                                        <h3 class="product-title"> {{ __('home.sale_in') }} {{$shop->name}}  </h3>
                                     @endif
                                 @endforeach
-                                <span class="product-price">{{number_format($product->price) }} تومان</span>
-                                <button class="add-to-cart" ><a style="color: white" href="{{ route('add.basket',  $product->id) }}" >ثبت در سبد خرید</a></button>
+                                <span class="product-price">{{ number_format($product->price) }} {{ __('home.price_unit') }}</span>
+                                <button class="add-to-cart"><a style="color: white" href="{{ route('add.basket',  $product->id) }}">{{ __('home.add_to_cart') }}</a></button>
                             </div>
                         </div>
                     @endif
@@ -729,11 +967,95 @@
         </section>
     @endforeach
 </main>
+<div id="pageModal" class="modal-overlay">
+    <div class="modal-box">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div id="modalContent"></div>
+    </div>
+</div>
+<div id="searchOverlay" class="search-overlay">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="{{ __('home.search_placeholder') }}" />
+        <button id="searchBtn">{{ __('home.search') }}</button>
+        <div id="searchResult" class="search-result"></div>
+        <button id="closeSearchBox" class="close-btn">{{ __('home.search_close') }}</button>
+    </div>
+</div>
+<div id="searchResult" class="search-result"></div>
+<script>
+    searchBtn.addEventListener('click', function () {
+        const query = searchInput.value.trim().toLowerCase();
+        const products = document.querySelectorAll('.product-card');
+        let found = false;
+        searchResult.innerHTML = '';
 
-<div class="back-to-top">↑</div>
+        products.forEach(product => {
+            const title = product.querySelector('.product-title').textContent.toLowerCase();
+            if (title.includes(query)) {
+                const productClone = product.cloneNode(true);
+                productClone.classList.add('product-preview');
+                searchResult.appendChild(productClone);
+                found = true;
+            }
+        });
+
+        if (!found) {
+            searchResult.innerHTML = '{{ __('home.search_no_result') }}';
+        }
+    });
+
+    function openModal(type) {
+        let content = '';
+        switch(type) {
+            case 'rules':
+                content = `<h3>{{ __('home.rules') }}</h3><p>{{ __('home.modal_rules') }}</p>`;
+                break;
+            case 'contact':
+                content = `<h3>{{ __('home.contact') }}</h3><p>{{ __('home.modal_contact') }}</p>`;
+                break;
+            case 'blog':
+                content = `<h3>{{ __('home.blog') }}</h3><p>{{ __('home.modal_blog') }}</p>`;
+                break;
+            case 'me':
+                content = `<h3>{{ __('home.about_us') }}</h3><p>{{ __('home.modal_about') }}</p>`;
+                break;
+        }
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('pageModal').style.display = 'flex';
+    }
+</script>
+
+
 
 <script>
-    // پیش‌لودر
+    function openModal(type) {
+        let content = '';
+
+        switch(type) {
+            case 'rules':
+                content = `<h3>{{ __('home.rules') }}</h3><p>{{ __('home.modal_rules') }}</p>`;
+                break;
+            case 'contact':
+                content = `<h3>{{ __('home.contact') }}</h3><p>{{ __('home.modal_contact') }}</p>`;
+                break;
+            case 'blog':
+                content = `<h3>{{ __('home.blog') }}</h3><p> {{ __('home.modal_blog') }}</p>`;
+                break;
+            case 'me':
+                content = `<h3>{{ __('home.about_us') }}</h3><p>{{ __('home.modal_about') }}</p>`;
+                break;
+        }
+
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('pageModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('pageModal').style.display = 'none';
+    }
+</script>
+
+<script>
     window.addEventListener('load', function() {
         setTimeout(function() {
             document.querySelector('.preloader').style.opacity = '0';
@@ -742,40 +1064,33 @@
         }, 1000);
     });
 
-    // تغییر دسته‌بندی محصولات
+
     document.querySelectorAll('.categories-nav li').forEach(item => {
         item.addEventListener('click', function() {
-            // انیمیشن برای آیتم‌های منو
             this.classList.add('animate__animated', 'animate__pulse');
             setTimeout(() => {
                 this.classList.remove('animate__animated', 'animate__pulse');
             }, 1000);
 
-            // حذف کلاس active از همه آیتم‌ها
             document.querySelectorAll('.categories-nav li').forEach(li => {
                 li.classList.remove('active');
             });
 
-            // اضافه کردن کلاس active به آیتم انتخاب شده
             this.classList.add('active');
 
-            // مخفی کردن همه بخش‌های محصولات
             document.querySelectorAll('.category-content').forEach(section => {
                 section.classList.remove('active');
             });
 
-            // نمایش بخش مربوطه
             const categoryId = this.getAttribute('data-category');
             document.getElementById(categoryId).classList.add('active');
 
-            // اسکرول به بخش محصولات
             document.getElementById(categoryId).scrollIntoView({
                 behavior: 'smooth'
             });
         });
     });
 
-    // دکمه بازگشت به بالا
     const backToTopButton = document.querySelector('.back-to-top');
 
     window.addEventListener('scroll', () => {
@@ -793,7 +1108,6 @@
         });
     });
 
-    // انیمیشن‌های اسکرول
     const animateOnScroll = () => {
         const elements = document.querySelectorAll('.product-card, .store-card, .section-title');
 
@@ -810,7 +1124,6 @@
     window.addEventListener('scroll', animateOnScroll);
     window.addEventListener('load', animateOnScroll);
 
-    // ناوبری دسته‌بندی‌ها
     const categoriesNav = document.querySelector('.categories-nav');
     const prevBtn = document.querySelector('.category-nav-btn.prev');
     const nextBtn = document.querySelector('.category-nav-btn.next');
@@ -829,7 +1142,6 @@
         });
     });
 
-    // نمایش/پنهان کردن دکمه‌های ناوبری بر اساس موقعیت اسکرول
     categoriesNav.addEventListener('scroll', () => {
         const scrollLeft = categoriesNav.scrollLeft;
         const scrollWidth = categoriesNav.scrollWidth;
@@ -839,10 +1151,8 @@
         nextBtn.style.display = scrollLeft < (scrollWidth - clientWidth - 1) ? 'flex' : 'none';
     });
 
-    // مقداردهی اولیه دکمه‌های ناوبری
     categoriesNav.dispatchEvent(new Event('scroll'));
 
-    // انیمیشن hover برای دکمه‌ها
     document.querySelectorAll('button, .auth-btn').forEach(btn => {
         btn.addEventListener('mouseenter', () => {
             btn.classList.add('animate__animated', 'animate__pulse');
@@ -855,7 +1165,6 @@
         });
     });
 
-    // پاگیانشن
     document.querySelectorAll('.pagination-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.pagination-btn').forEach(b => b.classList.remove('active'));
@@ -866,6 +1175,35 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({ once: true });
+</script>
+<script>
+    const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+
+    function setDarkMode(enabled) {
+        if (enabled) {
+            document.body.classList.add('dark-mode');
+            toggleDarkModeBtn.textContent = '☀️'; // تغییر آیکون به خورشید
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            document.body.classList.remove('dark-mode');
+            toggleDarkModeBtn.textContent = '🌙'; // تغییر آیکون به ماه
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    }
+
+    window.addEventListener('load', () => {
+        const darkModeSetting = localStorage.getItem('darkMode');
+        if (darkModeSetting === 'enabled') {
+            setDarkMode(true);
+        }
+    });
+
+    toggleDarkModeBtn.addEventListener('click', e => {
+        e.preventDefault();
+        const isDark = document.body.classList.contains('dark-mode');
+        setDarkMode(!isDark);
+    });
+
 </script>
 </body>
 </html>

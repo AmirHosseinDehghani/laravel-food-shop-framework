@@ -13,7 +13,7 @@ class CreateUserTransactionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('transaction_id')->unique();
             $table->decimal('amount', 10, 2);
-            $table->string('status'); // pending, paid, failed
+            $table->string('status');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

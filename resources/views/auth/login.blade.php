@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ورود</title>
 
-    <!-- لینک به فونت وزیر -->
-    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- لینک به FontAwesome برای آیکون‌ها -->
-
-    <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- فونت‌ها -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
         body, input, button {
-            font-family: 'Lateef', cursive; /* استفاده از فونت نستعلیق */
-            font-size: 24px ;
+            font-family: 'Lateef', cursive;
+            font-size: 24px;
             direction: rtl;
             margin: 0;
             padding: 0;
@@ -40,14 +38,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
@@ -134,7 +126,6 @@
             border: 1px solid transparent;
             border-radius: 5px;
             font-size: 14px;
-            position: relative;
             animation: fadeIn 0.5s;
         }
 
@@ -165,19 +156,57 @@
         .link a:hover, .recovery-link a:hover {
             text-decoration: underline;
         }
+
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .captcha-box img {
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: all 0.4s ease;
+        }
+
+        .refresh-btn {
+            background-color: #6c5ce7;
+            border: none;
+            color: white;
+            font-size: 20px;
+            padding: 10px 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.4s ease;
+        }
+
+        .refresh-btn.animate {
+            animation: spinPulse 0.7s ease-in-out;
+        }
+
+        @keyframes spinPulse {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>ورود به حساب</h2>
+    <h2>{{ __('auth.login_title') }}</h2>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul style="padding-right: 20px; margin: 0;">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
-            </div>
-        @endif
+            </ul>
+        </div>
+    @endif
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -189,37 +218,96 @@
         @csrf
         <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" name="email" placeholder="ایمیل" value="{{ old('email') }}" required>
+            <input type="email" name="email" placeholder="{{ __('auth.email') }}" value="{{ old('email') }}" required>
         </div>
         <div class="input-group password-container">
             <i class="fas fa-lock"></i>
-            <input type="password" id="password" name="password" placeholder="رمز عبور" required>
+            <input type="password" id="password" name="password" placeholder="{{ __('auth.password') }}" required>
             <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
         </div>
-        <input type="submit" value="ورود">
+
+        <div class="captcha-box">
+            <span id="captcha-img">{!! captcha_img('flat') !!}</span>
+            <button type="button" class="refresh-btn" id="reload">🔄</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="captcha" placeholder="{{ __('auth.captcha_placeholder') }}" required>
+        </div>
+
+        <input type="submit" value="{{ __('auth.login_button') }}">
     </form>
+
     <div class="link">
-        <p>حساب کاربری ندارید؟ <a href="{{ route('register') }}">ثبت‌نام کنید</a></p>
+        <p>{{ __('auth.no_account') }} <a href="{{ route('register') }}">{{ __('auth.register') }}</a></p>
     </div>
     <div class="recovery-link">
-        <p>رمز عبور خود را فراموش کرده‌اید؟ <a href="{{ route('password.reset.form') }}">بازیابی رمز عبور</a></p>
+        <p>{{ __('auth.forgot_password') }} <a href="{{ route('password.reset.form') }}">{{ __('auth.password_recovery') }}</a></p>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $('#reload').click(function () {
+        const $captchaImg = $('#captcha-img img');
+        const $btn = $(this);
+
+        $btn.addClass('animate');
+
+        $captchaImg.css({
+            filter: 'blur(2px)',
+            opacity: 0,
+            transform: 'scale(0.9)',
+            transition: 'all 0.3s ease'
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: '{{ url("/refresh-captcha") }}',
+            success: function (data) {
+                setTimeout(() => {
+                    $('#captcha-img').html(data.captcha);
+                    $('#captcha-img img').css({
+                        opacity: 0,
+                        filter: 'blur(3px)',
+                        transform: 'scale(1.2)'
+                    }).animate({
+                        opacity: 1
+                    }, {
+                        duration: 500,
+                        step: function (now, fx) {
+                            if (fx.prop === 'opacity') {
+                                $(this).css({
+                                    filter: `blur(${(1 - now) * 3}px)`,
+                                    transform: `scale(${1 + (1 - now) * 0.2})`
+                                });
+                            }
+                        },
+                        complete: function () {
+                            $btn.removeClass('animate');
+                        }
+                    });
+                }, 300);
+            },
+            error: function () {
+                alert('{{ __("auth.captcha_reload_error") }}');
+                $btn.removeClass('animate');
+            }
+        });
+    });
+
     function togglePassword() {
-        var passwordField = document.getElementById("password");
-        var icon = document.querySelector(".toggle-password");
+        const passwordField = document.getElementById("password");
+        const icon = document.querySelector(".toggle-password");
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
+            icon.classList.replace("fa-eye", "fa-eye-slash");
         } else {
             passwordField.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
+            icon.classList.replace("fa-eye-slash", "fa-eye");
         }
     }
 </script>
+
 </body>
 </html>

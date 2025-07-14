@@ -143,10 +143,10 @@
 </head>
 <body>
 <div class="container">
-    <h1>ثبت ‌نام</h1>
+    <h1>{{ __('register.register_title') }}</h1>
 
     @if ($errors->any())
-        <div class="alert">
+        <div class="alert alert-danger">
             <ul style="list-style: none; padding: 0; margin: 0;">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -156,48 +156,96 @@
     @endif
 
     <form action="{{ route('register.store') }}" method="POST">
-    @csrf
+        @csrf
 
-    <!-- ردیف اول: نام، نام خانوادگی، نوع کاربر -->
+
         <div class="form-group">
-            <input type="text" name="name" placeholder="نام" value="{{ old('name') }}" required>
-            <input type="text" name="family" placeholder="نام خانوادگی" value="{{ old('family') }}" required>
+            <input type="text" name="name" placeholder="{{ __('register.name') }}" value="{{ old('name') }}" required>
+            <input type="text" name="family" placeholder="{{ __('register.family') }}" value="{{ old('family') }}" required>
             <select name="type" required>
-                <option value="buyer">خریدار</option>
-                <option value="seller">فروشنده</option>
-                <option value="admin">مدیر</option>
+                <option value="buyer">{{ __('register.buyer') }}</option>
+                <option value="seller">{{ __('register.seller') }}</option>
+                <option value="admin">{{ __('register.admin') }}</option>
             </select>
         </div>
 
-        <!-- ردیف دوم: ایمیل -->
         <div class="form-group">
-            <input type="email" name="email" placeholder="ایمیل" value="{{ old('email') }}" required>
+            <input type="email" name="email" placeholder="{{ __('register.email') }}" value="{{ old('email') }}" required>
         </div>
 
-        <!-- ردیف سوم: رمز، تاییدیه، کد بازیابی -->
         <div class="form-group">
-            <input type="password" name="password" placeholder="رمز عبور" required>
-            <input type="password" name="password_confirmation" placeholder="تایید رمز عبور" required>
-            <input type="text" name="recovery_code" placeholder="کد بازیابی" value="{{ old('recovery_code') }}" required>
+            <input type="password" name="password" placeholder="{{ __('register.password') }}" required>
+            <input type="password" name="password_confirmation" placeholder="{{ __('register.password_confirm') }}" required>
+            <input type="text" name="recovery_code" placeholder="{{ __('register.recovery_code') }}" value="{{ old('recovery_code') }}" required>
         </div>
 
-        <!-- ردیف چهارم: کپچا -->
         <div class="captcha-box">
             <span id="captcha-img">{!! captcha_img('flat') !!}</span>
             <button type="button" class="refresh-btn" id="reload">🔄</button>
         </div>
         <div class="form-group">
-            <input type="text" name="captcha" placeholder="کد امنیتی را وارد کنید" required>
+            <input type="text" name="captcha" placeholder="{{ __('register.captcha_placeholder') }}" required>
         </div>
 
-        <!-- دکمه -->
-        <button type="submit">ثبت ‌نام</button>
+        <button type="submit">{{ __('register.register_button') }}</button>
     </form>
 
     <div class="link">
-        <p>حساب کاربری دارید؟ <a href="{{ route('login') }}">ورود</a></p>
+        <p>{{ __('register.have_account') }} <a href="{{ route('login') }}">{{ __('register.login') }}</a></p>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#reload').click(function () {
+        const $captchaImg = $('#captcha-img img');
+        const $btn = $(this);
+
+        $btn.addClass('animate');
+
+        $captchaImg.css({
+            filter: 'blur(2px)',
+            opacity: 0,
+            transform: 'scale(0.9)',
+            transition: 'all 0.3s ease'
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: '{{ url("/refresh-captcha") }}',
+            success: function (data) {
+                setTimeout(() => {
+                    $('#captcha-img').html(data.captcha);
+                    $('#captcha-img img').css({
+                        opacity: 0,
+                        filter: 'blur(3px)',
+                        transform: 'scale(1.2)'
+                    }).animate({
+                        opacity: 1
+                    }, {
+                        duration: 500,
+                        step: function (now, fx) {
+                            if (fx.prop === 'opacity') {
+                                $(this).css({
+                                    filter: `blur(${(1 - now) * 3}px)`,
+                                    transform: `scale(${1 + (1 - now) * 0.2})`
+                                });
+                            }
+                        },
+                        complete: function () {
+                            $btn.removeClass('animate');
+                        }
+                    });
+                }, 300);
+            },
+            error: function () {
+                alert('{{ __("register.captcha_reload_error") }}');
+                $btn.removeClass('animate');
+            }
+        });
+    });
+</script>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
