@@ -11,6 +11,13 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home'])->middleware('check.buyer')->name('home');
+Route::get('/search-by-category/{id}', [HomeController::class, 'category'])->middleware('check.buyer')->name('category');
+Route::get('/most-salle', [HomeController::class, 'mostSalle'])->middleware('check.buyer')->name('most-salle');
+Route::get('/most-off', [HomeController::class, 'mostOff'])->middleware('check.buyer')->name('most-off');
+Route::get('/search', [HomeController::class, 'search'])->middleware('check.buyer')->name('products-search');
+Route::get('/product/{id}', [HomeController::class, 'product'])->middleware('check.buyer')->name('product-info');
+
+
 Route::get('/dashboard', [UserController::class, 'dashboards'])->name('dashboard');
 Route::get('/refresh-captcha', function () {
     return response()->json(['captcha' => captcha_img('flat')]);
@@ -44,6 +51,8 @@ Route::get('/seller/product/form', [ProductController::class, 'form'])->name('pr
 Route::post('/seller/product/store', [ProductController::class, 'register'])->name('product.store');
 Route::get('/seller/product/manage', [ProductController::class, 'manage'])->name('product.manage');
 Route::get('/seller/product/update/{id}', [ProductController::class, 'edit'])->name('product.edit');
+Route::get('/seller/product/off/{id}', [ProductController::class, 'off'])->name('product.off');
+Route::get('/seller/product/off/delete/{id}', [ProductController::class, 'deleteOff'])->name('product.off.delete');
 Route::post('/seller/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
 
 Route::get('/admin/messenger/manage', [MessengerController::class, 'manage'])->name('messenger.manage');

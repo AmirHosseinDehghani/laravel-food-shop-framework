@@ -2,20 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddBasketRequest;
 use App\Http\Requests\AddOrderRequest;
 use App\Models\Basket;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Shop;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class ShopBasketController extends Controller
 {
-    public function store(int $id)
+    public function store(int $id, AddBasketRequest $request)
     {
-        $product = Product::query()->find($id);
-        $id = session('user')->id;
-        Basket::query()->create(['buyer' => $id, 'price' => $product->price, 'product' => $product->id]);
+        $number = $request->validated()['number'];
+        $price = 0;
+        $off = 0;
+        for ($index = 0; $index < $number; $index++) {
+            $product = Product::query()->find($id);
+            $userId = session('user')->id;
+            if ( !empty($product->off)){
+                $offAmount = ($product->price * $product->off) / 100;
+                $price = $product->price - $offAmount;
+
+                Basket::query()->create(['buyer' => $userId, 'price' => $price, 'product' => $product->id]);
+            }
+            else{
+                Basket::query()->create(['buyer' => $userId, 'price' => $product->price, 'product' => $product->id]);
+            }
+
+        }
         return redirect()->route('home')->with('success', ' این محصول به سبد خرید شما اضافه شد.برای ثبت خرید به داشبورد خور مراجعه کنید');
     }
 
@@ -46,6 +62,10 @@ class ShopBasketController extends Controller
         $shopBaskets = Basket::where('buyer', session('user')->id)->get();
         foreach ($shopBaskets as $basket) {
             $productIds[] = $basket->product;
+            $product = Product::query()->find($basket->product);
+            $product->update(['salle' => $product->salle + 1]);
+            $shop = Shop::query()->find($product->shop);
+            $shop->update(['salle' => $shop->salle + 1]);
             $total += $basket->price;
             Basket::destroy($basket->id);
         }
@@ -53,7 +73,7 @@ class ShopBasketController extends Controller
             'buyer' => session('user')->id,
             'baskets' => $productIds, // آرایه به صورت json ذخیره میشه
             'price' => $total,
-            'adders' =>$address['adders']
+            'adders' => $address['adders']
         ]);
 
         return redirect()->route('manage.basket')->with('success', 'سفارش شما ثبت شد . برای پرداخت و پیگیری جزییات به بخش سفارشات بروید.');

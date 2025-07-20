@@ -107,6 +107,21 @@ class OrderController extends Controller
 
         if (isset($result['data']) && $result['data']['code'] == 100) {
             $userId = session('user')->id;
+            $order = Order::query()->where('buyer', $userId)->where('type', 'dont_pay');
+            $products = Product::all();
+            $shops = Shop::all();
+            foreach ($order as $item) {
+                foreach ($item->baskets as $basket) {
+                    foreach ($products as $product) {
+                        if ($product->id == $basket) {
+                            foreach ($shops as $shop) {
+                                $shop->update(['bank' => $shop->bank + $basket->price]);
+                            }
+                        }
+                    }
+                }
+            }
+            $order->update(['type' => 'pay']);
             $order = Order::query()->where('buyer', $userId)->where('type', 'dont_pay')->update(['type' => 'pay']);
             return redirect()->route('manage.order')->with('success', __('OrderControllerLang.payment_success', ['ref_id' => $result['data']['ref_id']]));
         } else {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->integer('bank')->default('0');
+            $table->integer('salle')->nullable();
             $table->string('password');
             $table->enum('type', ['0', '1',])->default('0');
             $table->timestamps();

@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('description');
             $table->integer('price');
             $table->integer('category');
+            $table->string('url');
+            $table->integer('off')->nullable();
+            $table->integer('salle')->nullable();
+            $table->enum('type', ['package', 'kilo']);
             $table->timestamps();
         });
     }

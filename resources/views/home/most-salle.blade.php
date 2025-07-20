@@ -232,6 +232,8 @@
                     class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
 
 
+
+
                     <div class="cart text-end d-none d-lg-block dropdown">
                         <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1" type="button"
                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
@@ -470,8 +472,7 @@
                     <div class="swiper-wrapper">
                         @foreach($categories as $category)
                             <a href="{{route('category', $category->id)}}" class="nav-link category-item swiper-slide">
-                                <img style="height: 70px ; width: 70px" src="{{asset('img/category.png')}}"
-                                     alt="Category Thumbnail">
+                                <img style="height: 70px ; width: 70px" src="{{asset('img/category.png')}}" alt="Category Thumbnail">
                                 <h3 class="category-title">{{$category->name}}</h3>
                             </a>
                         @endforeach
@@ -492,21 +493,7 @@
 
                 <div class="bootstrap-tabs product-tabs">
                     <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                        <h3>گلچین محصولات</h3>
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab"
-                                   data-bs-toggle="tab" data-bs-target="#nav-all">All</a>
-                                @foreach($categories as $category)
-                                    <a href="#" class="nav-link text-uppercase fs-6"
-                                       id="nav-cat-{{ $category->id }}-tab"
-                                       data-bs-toggle="tab"
-                                       data-bs-target="#nav-cat-{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </nav>
+                        <h2 class="section-title">محصولات پرفروش</h2>
                     </div>
 
                     <div class="tab-content" id="nav-tabContent">
@@ -517,6 +504,7 @@
                             <div
                                 class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                 @foreach($products as $product)
+
 
                                         <div class="col product-box" data-name="{{ $product->name }}"
                                              id="product-{{ $product->id }}">
@@ -538,15 +526,14 @@
                                                 @else
                                                     <span class="price">بسته‌ای</span>
                                                 @endif
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="input-group product-qty">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="{{route('product-info',$product->id)}}">
+                                                            <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
+                                                        </a>
                                                     </div>
-                                                    <a href="{{route('product-info',$product->id)}}">
-                                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                                    </a>
-                                                </div>
                                             </div>
                                         </div>
+
                                 @endforeach
                             </div>
                         </div>
@@ -559,6 +546,7 @@
                                     class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                     @foreach($products as $product)
                                         @if($product->category == $category->id)
+
                                                 <div class="col product-box" data-name="{{ $product->name }}"
                                                      id="product-{{ $product->id }}">
 
@@ -581,15 +569,14 @@
                                                         @else
                                                             <span class="price">بسته‌ای</span>
                                                         @endif
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <div class="input-group product-qty">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <a href="{{route('product-info',$product->id)}}">
+                                                                    <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
+                                                                </a>
                                                             </div>
-                                                            <a href="{{route('product-info',$product->id)}}">
-                                                                <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                                            </a>
-                                                        </div>
                                                     </div>
                                                 </div>
+
                                         @endif
                                     @endforeach
                                 </div>
@@ -604,88 +591,9 @@
     </div>
 </section>
 
-<section class="py-5">
-    <div class="container-fluid">
-        <div class="row">
-            @if(!empty($bestOffs))
-                @foreach($bestOffs as $bestOff)
-                    @if($bestOff->off > 10)
-                        <div class="col-md-3">
-                            <div class="banner-ad bg-info mb-3"
-                                 style="background: url('images/ad-image-3.png');background-repeat: no-repeat;background-position: right bottom;">
-                                <div class="banner-content p-5">
 
-                                    <div class="categories text-primary fs-3 fw-bold">{{$bestOff->off}}% Off</div>
-                                    <h3 class="banner-title">{{$bestOff->name}}</h3>
-                                    <p>{{$bestOff->description}}</p>
 
-                                        <a href="{{route('product-info',$bestOff->id)}}">
-                                            <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                        </a>
 
-                                </div>
-
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
-            @endif
-        </div>
-    </div>
-</section>
-
-<section class="py-5 overflow-hidden">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="section-header d-flex flex-wrap justify-content-between my-5">
-
-                    <h2 class="section-title">محصولات پرفروش</h2>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="products-carousel swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($bestSalles as $best)
-                                <div class="product-item swiper-slide">
-                                    @if(!empty($best->off))
-                                        <span class="badge bg-success position-absolute m-3">{{$best->off}}%</span>
-                                    @endif
-                                    <figure>
-                                        <img style="width: 205px ; height: 210px" src="{{asset("storage/$best->url")}}"
-                                             class="tab-image">
-                                    </figure>
-                                    <h3>{{$best->name}}</h3>
-                                    @if($best->type == 'kilo')
-                                        <span class="price">کیلویی</span>
-                                    @else
-                                        <span class="price">بسته ای</span>
-                                    @endif
-                                    <span class="price">{{number_format($best->price)}}</span>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="input-group product-qty">
-
-                                        </div>
-                                        <a href="{{route('product-info',$best->id)}}">
-                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                        </a>
-                                    </div>
-                                </div>
-                        @endforeach
-                    </div>
-
-                </div>
-                <!-- / products-carousel -->
-
-            </div>
-        </div>
-    </div>
-</section>
 
 <section class="py-5" dir="rtl">
     <div class="container-fluid">
@@ -790,6 +698,7 @@
 </section>
 
 
+
 <div id="footer-bottom">
     <div class="container-fluid">
         <div class="row">
@@ -808,5 +717,8 @@
 <script src="{{ asset('js/script.js') }}"></script>
 
 
+
 </body>
 </html>
+
+

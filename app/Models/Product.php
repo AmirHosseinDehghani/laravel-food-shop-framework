@@ -19,5 +19,8 @@ class Product extends Model
         'shop',
         'recovery_code',
         'type',
+        'salle',
+        'url',
+        'off',
     ];
 }

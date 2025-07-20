@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OffProductRequest;
 use App\Http\Requests\ProductEditRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Category;
@@ -21,10 +22,16 @@ class ProductController extends Controller
     public function register(ProductStoreRequest $request)
     {
         $validated = $request->validated();
+        if ($request->hasFile('url')) {
+            $file = $request->file('url');
+            $path = $file->store('products', 'public');
+            $validated['url'] = $path;
+        }
         $validated['seller'] = session('user')->id;
-        Product::query()->create($validated);
-        return redirect()->route('product.form')->with('success', ' ثبت محصول با موفقیت انجام شد! ');
+        Product::create($validated);
+        return redirect()->route('product.form')->with('success', 'ثبت محصول با موفقیت انجام شد!');
     }
+
 
     public function manage()
     {
@@ -45,13 +52,25 @@ class ProductController extends Controller
         $validated = $request->validated();
         $product = Product::query()->find($id);
         if (!empty($validated['price'])) {
-            $product->update(['price'=> $validated['price']]);
+            $product->update(['price' => $validated['price']]);
             if (!empty($validated['description'])) {
                 $product->update(['description' => $validated['description']]);
             }
             if (empty($validated)) {
-                return redirect()->route('product.edit' , $id)->withErrors(['error' => 'ایمیل یا رمز عبور اشتباه است.']);
-            } else   return redirect()->route('product.edit' , $id)->with('success', ' تغییرات انجام شد! ');
+                return redirect()->route('product.edit', $id)->withErrors(['error' => 'ایمیل یا رمز عبور اشتباه است.']);
+            } else   return redirect()->route('product.edit', $id)->with('success', ' تغییرات انجام شد! ');
         }
+    }
+
+    public function off(int $id, OffProductRequest $request)
+    {
+       $off = $request->validated();
+
+        Product::query()->find($id)->update(['off' => $off['off']]);
+        return redirect()->route('product.manage')->with('success', ' تخفیف اعمال شد! ');
+    }
+    public function deleteOff(int $id){
+        Product::query()->find($id)->update(['off'=>null]);
+        return redirect()->route('product.manage')->with('success', ' تخفیف حذف شد! ');
     }
 }

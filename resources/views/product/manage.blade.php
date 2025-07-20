@@ -4,7 +4,12 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <h2 class="mb-2 page-title">مدیریت محصولات</h2>
-
+                    @if (session('success'))
+                        <div class="alert alert-success fade-in auto-dismiss">
+                            <i class="fe fe-check-circle mr-2"></i>
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="row my-4">
                         <!-- Small table -->
                         <div class="col-md-12">
@@ -18,7 +23,9 @@
                                             <th>توضیحات محصول</th>
                                             <th>قیمت محصول</th>
                                             <th>محل فروش</th>
+                                            <th>نحوه فروش</th>
                                             <th>دسته بندی</th>
+                                            <th>مقدار تخفیف</th>
                                             <th>انجام تغییرات</th>
                                         </tr>
                                         </thead>
@@ -36,6 +43,12 @@
                                                             @endif
                                                         @endforeach
                                                     </td>
+                                                    @if($product->type == 'kilo')
+                                                        <td>کیلویی</td>
+                                                    @else
+                                                        <td>بسته ای</td>
+                                                    @endif
+
                                                     <td>
                                                         @foreach($categories as $category)
                                                             @if($category->id == $product->category)
@@ -43,13 +56,74 @@
                                                             @endif
                                                         @endforeach
                                                     </td>
+                                                    @if(empty($product->off))
+                                                        <td>بدون تخفیف</td>
+                                                    @else
+                                                        <td>{{$product->off}}%</td>
+                                                    @endif
                                                     <td>
-                                                        <button type="submit" class="btn btn-info"><a
-                                                                style="color: white"
-                                                                href="{{ route('product.edit',  $product->id) }}">ویرایش</a>
-                                                        </button>
+                                                        <a href="{{ route('product.edit',  $product->id) }}"
+                                                           class="btn btn-info text-white mb-1">ویرایش</a>
 
+                                                        <!-- دکمه باز کردن مودال -->
+                                                        <button type="button" class="btn btn-warning text-white mb-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#discountModal-{{ $product->id }}">
+                                                            اعمال تخفیف
+                                                        </button>
+                                                        @if(!empty($product->off) && $product->off >0)
+
+                                                            <a href="{{route('product.off.delete',$product->id)}}"
+                                                               class="btn btn-danger text-white mb-1">حذف تخفیف</a>
+                                                                @endif
+                                                                <!-- مودال -->
+                                                            <div class="modal fade"
+                                                                 id="discountModal-{{ $product->id }}"
+                                                                 tabindex="-1"
+                                                                 aria-labelledby="discountModalLabel-{{ $product->id }}"
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <form
+                                                                        action="{{ route('product.off', $product->id) }}"
+                                                                        method="get">
+                                                                        @csrf
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="discountModalLabel-{{ $product->id }}">
+                                                                                    اعمال تخفیف
+                                                                                    برای {{ $product->name }}</h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="بستن"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        for="discountInput-{{ $product->id }}"
+                                                                                        class="form-label">درصد
+                                                                                        تخفیف</label>
+                                                                                    <input type="number" name="off"
+                                                                                           id="discountInput-{{ $product->id }}"
+                                                                                           class="form-control" min="1"
+                                                                                           max="100" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-success">ثبت
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-bs-dismiss="modal">بستن
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                     </td>
+
                                                 </tr>
                                             @endforeach
                                         @else
@@ -83,6 +157,8 @@
 
 <script src="js/apps.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
 <script>
     window.dataLayer = window.dataLayer || [];

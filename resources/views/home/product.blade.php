@@ -152,12 +152,12 @@
             <div class="order-md-last">
                 <ul class="list-group mb-3">
                     @foreach($baskets as $basket)
-                        @foreach($products as $product)
+                        @foreach($products as $item)
                             @if($product->id == $basket->product)
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
-                                        <h6 class="my-0">{{$product->name}}</h6>
-                                        <small class="text-body-secondary">{{$product->description}}</small>
+                                        <h6 class="my-0">{{$item->name}}</h6>
+                                        <small class="text-body-secondary">{{$item->description}}</small>
                                     </div>
                                     <span class="text-body-secondary">{{number_format($basket->price)}}</span>
                                 </li>
@@ -445,45 +445,97 @@
 
 @endif
 
-<section class="py-5 overflow-hidden">
+<section id="latest-blog" class="py-5">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-
-                <div class="section-header d-flex flex-wrap justify-content-between mb-5">
-                    <h2 class="section-title">خرید بر اساس دسته بندی</h2>
-
-                    <div class="d-flex align-items-center">
-                        <div class="swiper-buttons">
-                            <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
-                            <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="section-header d-flex align-items-center justify-content-between my-5">
+                <h2 class="section-title">محصول {{$product->name}}</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-
-                <div class="category-carousel swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($categories as $category)
-                            <a href="{{route('category', $category->id)}}" class="nav-link category-item swiper-slide">
-                                <img style="height: 70px ; width: 70px" src="{{asset('img/category.png')}}"
-                                     alt="Category Thumbnail">
-                                <h3 class="category-title">{{$category->name}}</h3>
-                            </a>
-                        @endforeach
+            <div class="col-md-4">
+                <article class="post-item card border-0 shadow-sm p-3">
+                    <div class="image-holder zoom-effect">
+                        <h3 class="post-title">
+                            <a href="#" class="text-decoration-none">تصویر محصول</a>
+                        </h3>
+                        <a href="#">
+                            <img style="width: 300px ; height: 300px" src="{{asset("storage/$product->url")}}"
+                                 alt="post" class="card-img-top">
+                        </a>
                     </div>
-                </div>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="post-item card border-0 shadow-sm p-3">
+                    <div class="card-body">
+                        <div class="post-header">
+                            <h3 class="post-title">
+                                <a href="#" class="text-decoration-none">{{$product->name}}</a>
+                            </h3>
+                            <p> نوع فروش : @if($product->type == 'kilo')
+                                    کیلویی
+                                @else
+                                    بسته‌ای
+                                @endif</p>
+                            <p>قیمت : {{number_format($product->price) }} تومان</p>
+                            <p>توضیحات فروشنده : {{$product->description}}</p>
+                            <p>فروش در {{$shop->name}}</p>
 
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="post-item card border-0 shadow-sm p-3">
+                    <div class="card-body">
+                        <div class="post-header">
+                            <h3>فروشنده </h3>
+                            <p>{{$seller->name . ' ' . $seller->family}}</p>
+                           @if(!empty($price))
+                                <h3>درصد تخفیف : {{$product->off}}%</h3>
+                                <h3>قیمت محصول با تخفیف {{number_format($price)}} تومان</h3>
+                            @else
+                                <h3>محصول بدون تخفیف </h3>
+                                <h3>قیمت محصول : {{number_format($product->price)}}</h3>
+                            @endif
+                            <form action="{{ route('add.basket', $product->id) }}" method="get">
+                                <div class="col product-box" data-name="{{ $product->name }}"
+                                     id="product-{{ $product->id }}">
+                                    <div class="product-item">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="input-group product-qty">
+                        <span class="input-group-btn">
+                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"
+                                    data-type="minus">
+                              <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
+                            </button>
+                        </span>
+                                                <input type="text" id="quantity" name="number"
+                                                       class="form-control input-number"
+                                                       value="1">
+                                                <span class="input-group-btn">
+                            <button type="button" class="quantity-right-plus btn btn-success btn-number"
+                                    data-type="plus">
+                                <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
+                            </button>
+                        </span>
+                                            </div>
+                                            <button class="btn btn-dark text-uppercase">افزودن به سبد خرید
+                                            </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </article>
             </div>
         </div>
     </div>
 </section>
-
-
 <section class="py-5">
     <div class="container-fluid">
 
@@ -492,21 +544,7 @@
 
                 <div class="bootstrap-tabs product-tabs">
                     <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                        <h3>گلچین محصولات</h3>
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab"
-                                   data-bs-toggle="tab" data-bs-target="#nav-all">All</a>
-                                @foreach($categories as $category)
-                                    <a href="#" class="nav-link text-uppercase fs-6"
-                                       id="nav-cat-{{ $category->id }}-tab"
-                                       data-bs-toggle="tab"
-                                       data-bs-target="#nav-cat-{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </nav>
+                        <h3>محصولات مرتبط</h3>
                     </div>
 
                     <div class="tab-content" id="nav-tabContent">
@@ -516,174 +554,46 @@
 
                             <div
                                 class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                                @foreach($products as $product)
+                                @foreach($relatedProducts as $related)
 
-                                        <div class="col product-box" data-name="{{ $product->name }}"
-                                             id="product-{{ $product->id }}">
-                                            <div class="product-item">
-                                                @if(!empty($product->off))
-                                                    <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
-                                                @endif
-                                                <figure>
-                                                    <a href="#" title="Product Title">
-                                                        <img style="width: 205px; height: 210px"
-                                                             src="{{ asset("storage/$product->url") }}"
-                                                             class="tab-image">
-                                                    </a>
-                                                </figure>
-                                                <h3>{{ $product->name }}</h3>
-                                                <span class="price">{{ number_format($product->price) }} تومان</span>
-                                                @if($product->type == 'kilo')
-                                                    <span class="price">کیلویی</span>
-                                                @else
-                                                    <span class="price">بسته‌ای</span>
-                                                @endif
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="input-group product-qty">
-                                                    </div>
-                                                    <a href="{{route('product-info',$product->id)}}">
-                                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                                    </a>
+                                    <div class="col product-box" data-name="{{ $related->name }}"
+                                         id="product-{{ $related->id }}">
+                                        <div class="product-item">
+                                            @if(!empty($related->off))
+                                                <span class="badge bg-success position-absolute m-3">{{ $related->off }}%</span>
+                                            @endif
+                                            <figure>
+                                                <a href="#" title="Product Title">
+                                                    <img style="width: 205px; height: 210px"
+                                                         src="{{ asset("storage/$related->url") }}"
+                                                         class="tab-image">
+                                                </a>
+                                            </figure>
+                                            <h3>{{ $related->name }}</h3>
+                                            <span class="price">{{ number_format($related->price) }} تومان</span>
+                                            @if($related->type == 'kilo')
+                                                <span class="price">کیلویی</span>
+                                            @else
+                                                <span class="price">بسته‌ای</span>
+                                            @endif
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div class="input-group product-qty">
                                                 </div>
+                                                <a href="{{route('product-info',$related->id)}}">
+                                                    <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
+                                                </a>
                                             </div>
                                         </div>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
-
-                        <!-- Category-specific tabs -->
-                        @foreach($categories as $category)
-                            <div class="tab-pane fade" id="nav-cat-{{ $category->id }}" role="tabpanel"
-                                 aria-labelledby="nav-cat-{{ $category->id }}-tab">
-                                <div
-                                    class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                                    @foreach($products as $product)
-                                        @if($product->category == $category->id)
-                                                <div class="col product-box" data-name="{{ $product->name }}"
-                                                     id="product-{{ $product->id }}">
-
-                                                    <div class="product-item">
-                                                        @if(!empty($product->off))
-                                                            <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
-                                                        @endif
-                                                        <figure>
-                                                            <a href="#" title="Product Title">
-                                                                <img style="width: 205px; height: 210px"
-                                                                     src="{{ asset("storage/$product->url") }}"
-                                                                     class="tab-image">
-                                                            </a>
-                                                        </figure>
-                                                        <h3>{{ $product->name }}</h3>
-                                                        <span
-                                                            class="price">{{ number_format($product->price) }} تومان</span>
-                                                        @if($product->type == 'kilo')
-                                                            <span class="price">کیلویی</span>
-                                                        @else
-                                                            <span class="price">بسته‌ای</span>
-                                                        @endif
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <div class="input-group product-qty">
-                                                            </div>
-                                                            <a href="{{route('product-info',$product->id)}}">
-                                                                <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
                     </div>
                 </div>
 
             </div>
         </div>
 
-    </div>
-</section>
-
-<section class="py-5">
-    <div class="container-fluid">
-        <div class="row">
-            @if(!empty($bestOffs))
-                @foreach($bestOffs as $bestOff)
-                    @if($bestOff->off > 10)
-                        <div class="col-md-3">
-                            <div class="banner-ad bg-info mb-3"
-                                 style="background: url('images/ad-image-3.png');background-repeat: no-repeat;background-position: right bottom;">
-                                <div class="banner-content p-5">
-
-                                    <div class="categories text-primary fs-3 fw-bold">{{$bestOff->off}}% Off</div>
-                                    <h3 class="banner-title">{{$bestOff->name}}</h3>
-                                    <p>{{$bestOff->description}}</p>
-
-                                        <a href="{{route('product-info',$bestOff->id)}}">
-                                            <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                        </a>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
-            @endif
-        </div>
-    </div>
-</section>
-
-<section class="py-5 overflow-hidden">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="section-header d-flex flex-wrap justify-content-between my-5">
-
-                    <h2 class="section-title">محصولات پرفروش</h2>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="products-carousel swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($bestSalles as $best)
-                                <div class="product-item swiper-slide">
-                                    @if(!empty($best->off))
-                                        <span class="badge bg-success position-absolute m-3">{{$best->off}}%</span>
-                                    @endif
-                                    <figure>
-                                        <img style="width: 205px ; height: 210px" src="{{asset("storage/$best->url")}}"
-                                             class="tab-image">
-                                    </figure>
-                                    <h3>{{$best->name}}</h3>
-                                    @if($best->type == 'kilo')
-                                        <span class="price">کیلویی</span>
-                                    @else
-                                        <span class="price">بسته ای</span>
-                                    @endif
-                                    <span class="price">{{number_format($best->price)}}</span>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="input-group product-qty">
-
-                                        </div>
-                                        <a href="{{route('product-info',$best->id)}}">
-                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                        </a>
-                                    </div>
-                                </div>
-                        @endforeach
-                    </div>
-
-                </div>
-                <!-- / products-carousel -->
-
-            </div>
-        </div>
     </div>
 </section>
 
@@ -810,3 +720,5 @@
 
 </body>
 </html>
+
+

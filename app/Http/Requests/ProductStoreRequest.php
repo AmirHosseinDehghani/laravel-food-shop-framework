@@ -27,9 +27,12 @@ class ProductStoreRequest extends FormRequest
             ],
             'price' => 'required|numeric|min:1000',
             'category' => 'required|numeric|',
-            'shop' => 'required|exists:shops,id'
+            'type' => 'required|string|',
+            'url' => 'required|file|mimes:jpg,jpeg,png,pdf,mp4,webm|max:10240',
+            'shop' => 'required|numeric'
         ];
     }
+
 
     public function messages()
     {
