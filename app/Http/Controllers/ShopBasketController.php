@@ -32,7 +32,7 @@ class ShopBasketController extends Controller
             }
 
         }
-        return redirect()->route('home')->with('success', ' این محصول به سبد خرید شما اضافه شد.برای ثبت خرید به داشبورد خور مراجعه کنید');
+        return redirect()->route('product-info' , $id)->with('success', ' این محصول به سبد خرید شما اضافه شد.برای ثبت خرید به داشبورد خور مراجعه کنید');
     }
 
     public function manage()
@@ -66,12 +66,14 @@ class ShopBasketController extends Controller
             $product->update(['salle' => $product->salle + 1]);
             $shop = Shop::query()->find($product->shop);
             $shop->update(['salle' => $shop->salle + 1]);
+
+
             $total += $basket->price;
             Basket::destroy($basket->id);
         }
         Order::create([
             'buyer' => session('user')->id,
-            'baskets' => $productIds, // آرایه به صورت json ذخیره میشه
+            'baskets' => $productIds,
             'price' => $total,
             'adders' => $address['adders']
         ]);

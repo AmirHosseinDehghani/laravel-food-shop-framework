@@ -27,6 +27,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
         body {
             font-size: 25px;
@@ -55,6 +61,15 @@
         .product-box.highlighted:hover {
             transform: scale(1.03);
         }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: #fff;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+        }
+
     </style>
 
 </head>
@@ -148,7 +163,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     @if(!empty($baskets))
-        <div class="offcanvas-body">
+        <div class="offcanvas-body ">
             <div class="order-md-last">
                 <ul class="list-group mb-3">
                     @foreach($baskets as $basket)
@@ -303,29 +318,50 @@
                                            data-bs-toggle="dropdown" aria-expanded="false">صفحه ها</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a href="{{route('home')}}" class="dropdown-item">صفحه اصلی </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ورود </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ثبت نام </a></li>
-                                            <li><a href="index.html" class="dropdown-item">قوانین </a></li>
-                                            <li><a href="index.html" class="dropdown-item">بلاگ ها</a></li>
+                                            <li><a href="{{route('dashboard')}}" class="dropdown-item">داشبورد </a></li>
+                                            <li><a href="{{route('logout')}}" class="dropdown-item">خروج </a></li>
+                                            <li><a href="{{route('rules')}}" class="dropdown-item">قوانین </a></li>
+                                            <li><a href="{{route('about')}}" class="dropdown-item">درباره ما </a></li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{route('most-salle')}}" class="nav-link">پرفروش ها</a>
+                                        <a href="{{ route('most-salle') }}" class="nav-link">
+                                            <i class="fas fa-star"></i> پرفروش‌ها
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('most-off')}}" class="nav-link">فروش شگفت انگیز</a>
+                                        <a href="{{ route('most-off') }}" class="nav-link">
+                                            <i class="fas fa-bolt"></i> فروش شگفت‌انگیز
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-gavel"></i> قوانین
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-shopping-cart"></i> سبد خرید
+                                        </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="#brand" class="nav-link">قوانین</a>
+                                        <a href="{{ route('about') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> درباره ما
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#brand" class="nav-link">درباره ما</a>
+                                        <a href="{{ route('make.conversion') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> ارتباط با ما
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#blog" class="nav-link">بلاگ ها</a>
+                                        <a href="{{ route('blog') }}" class="nav-link">
+                                            <i class="fas fa-blog"></i> بلاگ‌ها
+                                        </a>
                                     </li>
+
                                 </ul>
 
                             </div>
@@ -409,29 +445,44 @@
                                            data-bs-toggle="dropdown" aria-expanded="false">صفحه ها</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a href="{{route('home')}}" class="dropdown-item">صفحه اصلی </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ورود </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ثبت نام </a></li>
-                                            <li><a href="index.html" class="dropdown-item">قوانین </a></li>
-                                            <li><a href="index.html" class="dropdown-item">بلاگ ها</a></li>
+                                            <li><a href="{{route('login')}}" class="dropdown-item">ورود </a></li>
+                                            <li><a href="{{route('register')}}" class="dropdown-item">ثبت نام </a></li>
+                                            <li><a href="{{route('rules')}}" class="dropdown-item">قوانین </a></li>
+                                            <li><a href="{{route('blog')}}" class="dropdown-item">بلاگ ها</a></li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{route('most-salle')}}" class="nav-link">پرفروش ها</a>
+                                        <a href="{{ route('most-salle') }}" class="nav-link">
+                                            <i class="fas fa-star"></i> پرفروش‌ها
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('most-off')}}" class="nav-link">فروش شگفت انگیز</a>
+                                        <a href="{{ route('most-off') }}" class="nav-link">
+                                            <i class="fas fa-bolt"></i> فروش شگفت‌انگیز
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-gavel"></i> قوانین
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('about') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> درباره ما
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('make.conversion') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> ارتباط با ما
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('blog') }}" class="nav-link">
+                                            <i class="fas fa-blog"></i> بلاگ‌ها
+                                        </a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a href="#brand" class="nav-link">قوانین</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#brand" class="nav-link">درباره ما</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#blog" class="nav-link">بلاگ ها</a>
-                                    </li>
                                 </ul>
 
                             </div>
@@ -444,7 +495,81 @@
 
 
 @endif
+<section class="py-3"
+         style="background-image: url('{{asset('/img/images/background-pattern.jpg')}}');background-repeat: no-repeat;background-size: cover;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
 
+                <div class="banner-blocks">
+
+                    <div class="banner-ad large bg-info block-1">
+
+                        <div class="swiper main-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+                            <div class="swiper-wrapper" id="swiper-wrapper-1047f5a94fbf1556b" aria-live="polite"
+                                 style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+                                @foreach($shops as $shop)
+                                    <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 3"
+                                         style="width: 700px;">
+                                        <div class="row banner-content p-5">
+                                            <div class="content-wrapper col-md-12">
+                                                <div class="categories my-3">برترین فروشگاه ها</div>
+                                                <h3 class="display-4">{{$shop->name}}</h3>
+                                                <p>خریدی مطمعن و حساب شده را با اطمینان خاطر از فروشگاه {{$shop->name}}
+                                                  داشته باشید. </p>
+                                                <a href="{{route('shop-info',$shop->id)}}"
+                                                   class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1 px-4 py-3 mt-3">دیدن فروشگاه
+                                                    </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+
+                            <div
+                                class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal">
+                                <span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0"
+                                      role="button" aria-label="Go to slide 1" aria-current="true"></span><span
+                                    class="swiper-pagination-bullet" tabindex="0" role="button"
+                                    aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet"
+                                                                            tabindex="0" role="button"
+                                                                            aria-label="Go to slide 3"></span></div>
+
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                    </div>
+
+                    <div class="banner-ad bg-success-subtle block-2" style="background:url('images/ad-image-1.png') no-repeat;background-position: right bottom">
+                        <div class="row banner-content p-5">
+
+                            <div class="content-wrapper col-md-8">
+                                <h3 class="banner-title">سوپرمز</h3>
+                                <p>همین الان با ثبت نام به عنوان فروشنده شروع به کسب درآمد کن ! </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="banner-ad bg-danger block-3" style="background:url('images/ad-image-2.png') no-repeat;background-position: right bottom">
+                        <div class="row banner-content p-5">
+
+                            <div class="content-wrapper col-md-8">
+
+                                <h3 class="item-title">خریدی آسان با ما</h3>
+                                <p>با سوپرمز خریدی آسان ، راحت ، سالم و ارزان از چندین فروشنده داشته باش. </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / Banner Blocks -->
+
+            </div>
+        </div>
+    </div>
+</section>
 <section class="py-5 overflow-hidden">
     <div class="container-fluid">
         <div class="row">
@@ -496,7 +621,7 @@
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab"
-                                   data-bs-toggle="tab" data-bs-target="#nav-all">All</a>
+                                   data-bs-toggle="tab" data-bs-target="#nav-all">همه</a>
                                 @foreach($categories as $category)
                                     <a href="#" class="nav-link text-uppercase fs-6"
                                        id="nav-cat-{{ $category->id }}-tab"
@@ -518,35 +643,36 @@
                                 class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                 @foreach($products as $product)
 
-                                        <div class="col product-box" data-name="{{ $product->name }}"
-                                             id="product-{{ $product->id }}">
-                                            <div class="product-item">
-                                                @if(!empty($product->off))
-                                                    <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
-                                                @endif
-                                                <figure>
-                                                    <a href="#" title="Product Title">
-                                                        <img style="width: 205px; height: 210px"
-                                                             src="{{ asset("storage/$product->url") }}"
-                                                             class="tab-image">
-                                                    </a>
-                                                </figure>
-                                                <h3>{{ $product->name }}</h3>
-                                                <span class="price">{{ number_format($product->price) }} تومان</span>
-                                                @if($product->type == 'kilo')
-                                                    <span class="price">کیلویی</span>
-                                                @else
-                                                    <span class="price">بسته‌ای</span>
-                                                @endif
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="input-group product-qty">
-                                                    </div>
-                                                    <a href="{{route('product-info',$product->id)}}">
-                                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                                    </a>
+                                    <div class="col product-box" data-name="{{ $product->name }}"
+                                         id="product-{{ $product->id }}">
+                                        <div class="product-item">
+                                            @if(!empty($product->off))
+                                                <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
+                                            @endif
+                                            <figure>
+                                                <a href="#" title="Product Title">
+                                                    <img style="width: 205px; height: 210px"
+                                                         src="{{ asset("storage/$product->url") }}"
+                                                         class="tab-image">
+                                                </a>
+                                            </figure>
+                                            <h3>{{ $product->name }}</h3>
+                                            <span class="price">{{ number_format($product->price) }} تومان</span>
+                                            @if($product->type == 'kilo')
+                                                <span class="price">کیلویی</span>
+                                            @else
+                                                <span class="price">بسته‌ای</span>
+                                            @endif
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div class="input-group product-qty">
                                                 </div>
+                                                <a href="{{route('product-info',$product->id)}}">
+                                                    <button class="btn btn-dark text-uppercase">افزودن به سبد خرید
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -559,37 +685,39 @@
                                     class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                     @foreach($products as $product)
                                         @if($product->category == $category->id)
-                                                <div class="col product-box" data-name="{{ $product->name }}"
-                                                     id="product-{{ $product->id }}">
+                                            <div class="col product-box" data-name="{{ $product->name }}"
+                                                 id="product-{{ $product->id }}">
 
-                                                    <div class="product-item">
-                                                        @if(!empty($product->off))
-                                                            <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
-                                                        @endif
-                                                        <figure>
-                                                            <a href="#" title="Product Title">
-                                                                <img style="width: 205px; height: 210px"
-                                                                     src="{{ asset("storage/$product->url") }}"
-                                                                     class="tab-image">
-                                                            </a>
-                                                        </figure>
-                                                        <h3>{{ $product->name }}</h3>
-                                                        <span
-                                                            class="price">{{ number_format($product->price) }} تومان</span>
-                                                        @if($product->type == 'kilo')
-                                                            <span class="price">کیلویی</span>
-                                                        @else
-                                                            <span class="price">بسته‌ای</span>
-                                                        @endif
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <div class="input-group product-qty">
-                                                            </div>
-                                                            <a href="{{route('product-info',$product->id)}}">
-                                                                <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                                            </a>
+                                                <div class="product-item">
+                                                    @if(!empty($product->off))
+                                                        <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
+                                                    @endif
+                                                    <figure>
+                                                        <a href="#" title="Product Title">
+                                                            <img style="width: 205px; height: 210px"
+                                                                 src="{{ asset("storage/$product->url") }}"
+                                                                 class="tab-image">
+                                                        </a>
+                                                    </figure>
+                                                    <h3>{{ $product->name }}</h3>
+                                                    <span
+                                                        class="price">{{ number_format($product->price) }} تومان</span>
+                                                    @if($product->type == 'kilo')
+                                                        <span class="price">کیلویی</span>
+                                                    @else
+                                                        <span class="price">بسته‌ای</span>
+                                                    @endif
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="input-group product-qty">
                                                         </div>
+                                                        <a href="{{route('product-info',$product->id)}}">
+                                                            <button class="btn btn-dark text-uppercase">افزودن به سبد
+                                                                خرید
+                                                            </button>
+                                                        </a>
                                                     </div>
                                                 </div>
+                                            </div>
                                         @endif
                                     @endforeach
                                 </div>
@@ -610,7 +738,7 @@
             @if(!empty($bestOffs))
                 @foreach($bestOffs as $bestOff)
                     @if($bestOff->off > 10)
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-flex">
                             <div class="banner-ad bg-info mb-3"
                                  style="background: url('images/ad-image-3.png');background-repeat: no-repeat;background-position: right bottom;">
                                 <div class="banner-content p-5">
@@ -619,9 +747,9 @@
                                     <h3 class="banner-title">{{$bestOff->name}}</h3>
                                     <p>{{$bestOff->description}}</p>
 
-                                        <a href="{{route('product-info',$bestOff->id)}}">
-                                            <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                        </a>
+                                    <a href="{{route('product-info',$bestOff->id)}}">
+                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
+                                    </a>
 
                                 </div>
 
@@ -651,31 +779,31 @@
 
                 <div class="products-carousel swiper">
                     <div class="swiper-wrapper">
-                        @foreach($bestSalles as $best)
-                                <div class="product-item swiper-slide">
-                                    @if(!empty($best->off))
-                                        <span class="badge bg-success position-absolute m-3">{{$best->off}}%</span>
-                                    @endif
-                                    <figure>
-                                        <img style="width: 205px ; height: 210px" src="{{asset("storage/$best->url")}}"
-                                             class="tab-image">
-                                    </figure>
-                                    <h3>{{$best->name}}</h3>
-                                    @if($best->type == 'kilo')
-                                        <span class="price">کیلویی</span>
-                                    @else
-                                        <span class="price">بسته ای</span>
-                                    @endif
-                                    <span class="price">{{number_format($best->price)}}</span>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="input-group product-qty">
+                        @foreach($bestSalles as $bests)
+                            <div class="product-item swiper-slide">
+                                @if(!empty($bests->off))
+                                    <span class="badge bg-success position-absolute m-3">{{$bests->off}}%</span>
+                                @endif
+                                <figure>
+                                    <img style="width: 205px ; height: 210px" src="{{asset("storage/$bests->url")}}"
+                                         class="tab-image">
+                                </figure>
+                                <h3>{{$bests->name}}</h3>
+                                @if($bests->type == 'kilo')
+                                    <span class="price">کیلویی</span>
+                                @else
+                                    <span class="price">بسته ای</span>
+                                @endif
+                                <span class="price">{{number_format($bests->price)}}</span>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="input-group product-qty">
 
-                                        </div>
-                                        <a href="{{route('product-info',$best->id)}}">
-                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
-                                        </a>
                                     </div>
+                                    <a href="{{route('product-info',$bests->id)}}">
+                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
+                                    </a>
                                 </div>
+                            </div>
                         @endforeach
                     </div>
 
@@ -686,9 +814,9 @@
         </div>
     </div>
 </section>
-
 <section class="py-5" dir="rtl">
     <div class="container-fluid">
+
         <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-5 text-end">
             <div class="col">
                 <div class="card mb-3 border-0">
@@ -784,8 +912,16 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+        {{-- لوگوی زرین‌پال --}}
+        <div class="row mt-5 justify-content-center text-center">
+            <div class="col-12">
+                <p class="mb-2 text-muted">درگاه پرداخت امن با همکاری زرین‌پال</p>
+                <img src="{{ asset('img/zarin.jfif') }}" alt="زرین‌پال" style="height: 150px;">
+            </div>
+        </div>
+
     </div>
 </section>
 

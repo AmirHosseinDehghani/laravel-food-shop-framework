@@ -37,22 +37,12 @@
                                 </div>
                                 <div class="card-body" data-simplebar
                                      style="height:355px; overflow-y: auto; overflow-x: hidden;">
-                                    @if(isset($shops) && count($shops) > 0)
-                                        @foreach($shops as $shop)
-                                            <div class="pb-3 timeline-item item-warning">
-                                                <div class="pl-5">
-                                                    <div class="mb-3"><strong>فروشگاه شماره {{$shop->id}} نیازمند تایید است  </strong></div>
-                                                    <a href="{{route('Ad.shop.manage')}}"><h4>برای دیدن جزییات کلیک کنید</h4></a>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @else
                                         <div class="pb-3 timeline-item item-warning">
                                             <div class="pl-5">
-                                                <div class="mb-3"><strong>فعالیتی برای انجام ندارید </strong></div>
+                                                <div class="mb-3"><strong>نیازمند تاییدیه</strong></div>
                                             </div>
                                         </div>
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -66,52 +56,21 @@
                                                 <h6 class=" mb-3"><strong></strong> {{session('user')->email}}</h6>
                                             </div>
                                         </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div> <!-- /. col -->
+                                    </div>
+                                </div>
                                 <div class="col-md-6 my-6">
                                     <div class="card shadow">
                                         <div class="card-body text-center">
-                                            <h4 class=" mb-3">کل فروش های سایت شما<strong></strong></h4>
+                                            <h4 class=" mb-3">اقدامات شما<strong></strong></h4>
                                             <div>
-                                                <h5 class=" mb-3"><strong></strong> {{number_format($price)}} تومان</h5>
+                                                <h5 class=" mb-3"><strong></strong> برای باز شدن پنل نیازمند تایید هستید</h5>
                                             </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div> <!-- /. col -->
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
-                            <div class="row">
-                                <div class="col-md-3 my-4">
-                                    <div class="card shadow">
-                                        <div class="card-body text-center">
-                                            <h4 class=" mb-3">تعداد سفارشات<strong></strong></h4>
-                                            <div>
-                                                <h5 class=" mb-3"><strong></strong> {{$orderNumber}}</h5>
-                                            </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div> <!-- /. col -->
-                                <div class="col-md-3 my-4">
-                                    <div class="card shadow">
-                                        <div class="card-body text-center">
-                                            <h4 class=" mb-3">تعداد فروشگاه ها  <strong></strong></h4>
-                                            <div>
-                                                <h5 class=" mb-3"><strong></strong>  {{$shopNumber}}  </h5>
-                                            </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div>
-                                <div class="col-md-6 my-4">
-                                    <div class="card shadow">
-                                        <div class="card-body text-center">
-                                            <h4 class=" mb-3">مبلغ قابل پرداخت به فروشندگان <strong></strong></h4>
-                                            <div>
-                                                <h5 class=" mb-3"><strong></strong>  {{number_format($bank)}}  </h5>
-                                            </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div>
-                            </div> <!-- end section --><!-- end section -->
+
                         </div> <!-- Striped rows -->
                     </div>
                 </div>

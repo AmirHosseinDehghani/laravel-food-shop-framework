@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('subject');
             $table->string('text');
             $table->integer('answer')->nullable();
-            $table->enum('type', ['send', 'see', 'answered'])->default('send'); // نوع کاربر (خریدار، فروشنده، مدیر)
+            $table->enum('type', ['send', 'see', 'answered'])->default('send');
             $table->timestamps();
         });
     }
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages'); // حذف جدول در صورت بازگشت
+        Schema::dropIfExists('messages');
     }//
 
 };

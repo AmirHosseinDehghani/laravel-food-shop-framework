@@ -7,14 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
     <style>
         body, input, button, select {
-            font-family: 'Lateef', cursive;
+            font-family: 'Rubik', sans-serif;
             direction: rtl;
             margin: 0;
             padding: 0;
+            font-size: 16px;
         }
 
         body {
-            background: linear-gradient(to right, #f3a3bc, #6c5ce7);
+            background: linear-gradient(to right, #dbdbdb, #dbdbdb);
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -39,12 +40,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 {
+        h1, h2 {
             text-align: center;
             margin-bottom: 25px;
-            color: #ff5c8d;
-            font-size: 36px;
-            font-weight: 700;
+            color: #6995B1;
+            font-size: 28px;
+            font-weight: bold;
         }
 
         .form-group {
@@ -54,11 +55,12 @@
             flex-wrap: wrap;
         }
 
-        .form-group input, .form-group select {
+        .form-group input,
+        .form-group select {
             padding: 14px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 14px;
             background-color: #f6f6f6;
             transition: 0.3s ease;
             box-sizing: border-box;
@@ -66,27 +68,30 @@
             min-width: 0;
         }
 
-        input:focus, select:focus {
-            border-color: #ff5c8d;
+        input:focus,
+        select:focus {
+            border-color: #a3be4c;
             outline: none;
-            box-shadow: 0 0 10px rgba(255, 92, 141, 0.5);
+            box-shadow: 0 0 10px #a3be4c;
         }
 
-        button {
-            background-color: #ff5c8d;
+        button, input[type="submit"] {
+            background-color: #6995B1;
             color: white;
             border: none;
             cursor: pointer;
-            padding: 16px;
+            padding: 14px;
             border-radius: 8px;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             width: 100%;
-            transition: background-color 0.3s ease;
+            transition: 0.3s;
         }
 
-        button:hover {
-            background-color: #ff4064;
+        button:hover,
+        input[type="submit"]:hover {
+            background-color: #a3be4c;
+            transform: scale(1.05);
         }
 
         .link {
@@ -95,10 +100,14 @@
         }
 
         .link a {
-            color: #ff5c8d;
+            color: #6995B1;
             text-decoration: none;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 14px;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
         }
 
         .alert {
@@ -108,6 +117,7 @@
             border-radius: 8px;
             margin-bottom: 15px;
             color: #900;
+            font-size: 14px;
         }
 
         .captcha-box {
@@ -126,7 +136,7 @@
         }
 
         .refresh-btn {
-            background-color: #6c5ce7;
+            background-color: #6995B1;
             border: none;
             color: white;
             font-size: 18px;
@@ -137,9 +147,10 @@
         }
 
         .refresh-btn:hover {
-            background-color: #574bdf;
+            background-color: #6995B1;
         }
     </style>
+
 </head>
 <body>
 <div class="container">

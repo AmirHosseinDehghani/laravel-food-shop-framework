@@ -9,10 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <title>Tiny Dashboard - A Bootstrap Dashboard Template</title>
+    <title>supermaz | سوپرمز</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="{{ asset('css/simplebar.css') }}">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -34,9 +36,31 @@
     <link rel="stylesheet" href="{{ asset('css/daterangepicker.css') }}">
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('css/app-light.css') }}" id="lightTheme" >
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Local CSS files -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vendor.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.min.css" />
     <style>
         body {
-            font-family: 'Lateef', cursive; /* استفاده از فونت نستعلیق */
+            font-family: "Rubik", sans-serif;
             font-size: 24px ;
 
         }
@@ -225,17 +249,40 @@
                 </ul>
             </li>
             <li class="nav-item w-100">
-                <a class="nav-link" href="{{route('messenger.manage')}}">
-                    <i class="fe fe-file-text fe-16"></i>
-                    <span class="ml-3 item-text">مدیریت پیغام ها</span>
-                </a>
-            </li>
-            <li class="nav-item w-100">
                 <a class="nav-link" href="{{route('seller.order')}}">
                     <i class="fe  fe-shopping-cart fe-16"></i>
                     <span class="ml-3 item-text">مدیریت سفارشات</span>
                 </a>
             </li>
+            <li class="nav-item dropdown">
+                <a href="#ticket" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                    <i class="fe fe-edit fe-16"></i>
+                    <span class="ml-3 item-text">تیکت ها</span>
+                </a>
+                <ul class="collapse list-unstyled pl-4 w-100" id="ticket">
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="{{ route('ticket.store') }}">
+                            <i class="fe fe-plus  fe-16"></i>
+                            <span class="ml-1 item-text">ثبت تیکت</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-3" href="{{ route('ticket.manage') }}">
+                            <i class="fe fe-settings  fe-16"></i>
+                            <span class="ml-1 item-text">تیکت های قبلی </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-item w-100">
+                <a class="nav-link" href="{{route('messenger.manage')}}">
+                    <i class="fe fe-file-text fe-16"></i>
+                    <span class="ml-3 item-text">مدیریت پیغام ها</span>
+                </a>
+            </li>
+
+
         </ul>
 
 

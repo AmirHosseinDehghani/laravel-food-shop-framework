@@ -1,4 +1,4 @@
-<!doctype html>
+!doctype html>
 <html lang="en">
 <head>
 
@@ -22,6 +22,7 @@
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('css/daterangepicker.css') }}">
     <!-- App CSS -->
+
     <link rel="stylesheet" href="{{ asset('css/app-light.css') }}" id="lightTheme">
     <link rel="stylesheet" href="{{ asset('css/app-dark.css') }}" id="darkTheme" disabled>
     <link rel="stylesheet" href="{{ asset('css/feather.css') }}">
@@ -36,9 +37,12 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('css/app-light.css') }}" id="lightTheme" >
     <link rel="stylesheet" href="{{ asset('css/app-dark.css') }}" id="darkTheme" disabled>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Lateef', cursive; /* استفاده از فونت نستعلیق */
+            font-family: "Rubik", sans-serif;
             font-size: 24px ;
 
         }
@@ -111,27 +115,23 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                    <i class="fe fe-pie-chart fe-16"></i>
-                    <span class="ml-3 item-text">مدیریت دسته بندی ها</span>
+                <a href="{{ route('admin.order') }}"  class=" nav-link">
+                    <i class="fe fe-settings fe-16"></i>
+                    <span class="ml-3 item-text">مدیریت سفارشات</span>
                 </a>
-                <ul class="collapse list-unstyled pl-4 w-100" id="charts">
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="{{ route('Ad.category.form') }}">
-                            <i class="fe fe-plus  fe-16"></i>
-                            <span class="ml-1 item-text">افزودن دسته بندی</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pl-3" href="{{ route('category.manage') }}">
-                            <i class="fe fe-settings  fe-16"></i>
-                            <span class="ml-1 item-text">مدیریت دسته بندی </span>
-                        </a>
-                    </li>
-
-                </ul>
             </li>
-
+            <li class="nav-item dropdown">
+                <a href="{{ route('manage-comment') }}"  class=" nav-link">
+                    <i class="fe fe-settings fe-16"></i>
+                    <span class="ml-3 item-text">مدیریت محصولات</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="{{ route('ticket.manage') }}"  class=" nav-link">
+                    <i class="fe fe-settings fe-16"></i>
+                    <span class="ml-3 item-text"> تیکت ها</span>
+                </a>
+            </li>
         </ul>
 
 

@@ -14,6 +14,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -27,6 +28,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
     <style>
         body {
             font-size: 25px;
@@ -54,6 +59,25 @@
 
         .product-box.highlighted:hover {
             transform: scale(1.03);
+        }
+
+        .fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .reload-icon.rotate {
+            animation: spin 0.8s linear;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 
@@ -153,7 +177,7 @@
                 <ul class="list-group mb-3">
                     @foreach($baskets as $basket)
                         @foreach($products as $item)
-                            @if($product->id == $basket->product)
+                            @if($item->id == $basket->product)
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
                                         <h6 class="my-0">{{$item->name}}</h6>
@@ -303,29 +327,50 @@
                                            data-bs-toggle="dropdown" aria-expanded="false">صفحه ها</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a href="{{route('home')}}" class="dropdown-item">صفحه اصلی </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ورود </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ثبت نام </a></li>
-                                            <li><a href="index.html" class="dropdown-item">قوانین </a></li>
-                                            <li><a href="index.html" class="dropdown-item">بلاگ ها</a></li>
+                                            <li><a href="{{route('dashboard')}}" class="dropdown-item">داشبورد </a></li>
+                                            <li><a href="{{route('logout')}}" class="dropdown-item">خروج </a></li>
+                                            <li><a href="{{route('rules')}}" class="dropdown-item">قوانین </a></li>
+                                            <li><a href="{{route('about')}}" class="dropdown-item">درباره ما </a></li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{route('most-salle')}}" class="nav-link">پرفروش ها</a>
+                                        <a href="{{ route('most-salle') }}" class="nav-link">
+                                            <i class="fas fa-star"></i> پرفروش‌ها
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('most-off')}}" class="nav-link">فروش شگفت انگیز</a>
+                                        <a href="{{ route('most-off') }}" class="nav-link">
+                                            <i class="fas fa-bolt"></i> فروش شگفت‌انگیز
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-gavel"></i> قوانین
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-shopping-cart"></i> سبد خرید
+                                        </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="#brand" class="nav-link">قوانین</a>
+                                        <a href="{{ route('about') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> درباره ما
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#brand" class="nav-link">درباره ما</a>
+                                        <a href="{{ route('make.conversion') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> ارتباط با ما
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#blog" class="nav-link">بلاگ ها</a>
+                                        <a href="{{ route('blog') }}" class="nav-link">
+                                            <i class="fas fa-blog"></i> بلاگ‌ها
+                                        </a>
                                     </li>
+
                                 </ul>
 
                             </div>
@@ -409,29 +454,44 @@
                                            data-bs-toggle="dropdown" aria-expanded="false">صفحه ها</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a href="{{route('home')}}" class="dropdown-item">صفحه اصلی </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ورود </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ثبت نام </a></li>
-                                            <li><a href="index.html" class="dropdown-item">قوانین </a></li>
-                                            <li><a href="index.html" class="dropdown-item">بلاگ ها</a></li>
+                                            <li><a href="{{route('login')}}" class="dropdown-item">ورود </a></li>
+                                            <li><a href="{{route('register')}}" class="dropdown-item">ثبت نام </a></li>
+                                            <li><a href="{{route('rules')}}" class="dropdown-item">قوانین </a></li>
+                                            <li><a href="{{route('blog')}}" class="dropdown-item">بلاگ ها</a></li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{route('most-salle')}}" class="nav-link">پرفروش ها</a>
+                                        <a href="{{ route('most-salle') }}" class="nav-link">
+                                            <i class="fas fa-star"></i> پرفروش‌ها
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('most-off')}}" class="nav-link">فروش شگفت انگیز</a>
+                                        <a href="{{ route('most-off') }}" class="nav-link">
+                                            <i class="fas fa-bolt"></i> فروش شگفت‌انگیز
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-gavel"></i> قوانین
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('about') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> درباره ما
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('make.conversion') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> ارتباط با ما
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('blog') }}" class="nav-link">
+                                            <i class="fas fa-blog"></i> بلاگ‌ها
+                                        </a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a href="#brand" class="nav-link">قوانین</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#brand" class="nav-link">درباره ما</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#blog" class="nav-link">بلاگ ها</a>
-                                    </li>
                                 </ul>
 
                             </div>
@@ -448,12 +508,29 @@
 <section id="latest-blog" class="py-5">
     <div class="container-fluid">
         <div class="row">
-            <div class="section-header d-flex align-items-center justify-content-between my-5">
+            <div class="section-header  align-items-center justify-content-between my-5">
                 <h2 class="section-title">محصول {{$product->name}}</h2>
+                @if (session('success'))
+                    <div class="alert alert-success fade-in auto-dismiss" id="success-alert">
+                        <i class="fe fe-check-circle mr-2"></i>
+                        {{ session('success') }}
+                    </div>
+
+
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul style="padding-right: 20px; margin: 0;">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="row ">
+            <div class="col-md-4 d-flex ">
                 <article class="post-item card border-0 shadow-sm p-3">
                     <div class="image-holder zoom-effect">
                         <h3 class="post-title">
@@ -466,7 +543,7 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex">
                 <article class="post-item card border-0 shadow-sm p-3">
                     <div class="card-body">
                         <div class="post-header">
@@ -486,13 +563,13 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex">
                 <article class="post-item card border-0 shadow-sm p-3">
                     <div class="card-body">
                         <div class="post-header">
                             <h3>فروشنده </h3>
                             <p>{{$seller->name . ' ' . $seller->family}}</p>
-                           @if(!empty($price))
+                            @if(!empty($price))
                                 <h3>درصد تخفیف : {{$product->off}}%</h3>
                                 <h3>قیمت محصول با تخفیف {{number_format($price)}} تومان</h3>
                             @else
@@ -538,6 +615,250 @@
 </section>
 <section class="py-5">
     <div class="container-fluid">
+        <div class="bg-secondary bg-opacity-10 py-5 my-5 rounded-5"
+             style="background: url('{{ asset('img/images/bg-leaves-img-pattern.png') }}') no-repeat;">
+            <div class="container my-5">
+                <div class="row">
+
+
+                    <div class="col-md-8 p-4">
+                        <div class="section-header mb-4 d-flex align-items-center gap-2">
+                            <i class="bi bi-chat-dots text-primary fs-3"></i>
+                            <h2 class="section-title fs-4 m-0">نظرات کاربران</h2>
+                        </div>
+
+                        @if(!empty($comments) && count($comments) > 0)
+                            @foreach($comments->where('replay', null) as $comment)
+                                <div class="card border-0 shadow-sm mb-4 rounded-4 bg-light p-3">
+                                    <div class="card-body">
+
+                                        <p class="mb-3 text-dark fs-6 fw-light m-0">
+                                            <i class="bi bi-chat-left-text text-secondary me-1"></i>
+                                            {{ $comment->comment }}
+                                        </p>
+
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
+
+                                            <form action="{{ route('like', ['id' => $comment->id, 'product' => $product->id]) }}" method="get">
+                                                <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-3 shadow-sm">
+                                                    👍 {{ $comment->like }}
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('dislike', ['id' => $comment->id, 'product' => $product->id]) }}" method="get">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 shadow-sm">
+                                                    👎 {{ $comment->dislike }}
+                                                </button>
+                                            </form>
+
+                                            <button type="button" class="btn btn-sm btn-outline-dark rounded-pill px-3 open-reply-modal shadow-sm" data-comment-id="{{ $comment->id }}">
+                                                📝 پاسخ دادن
+                                            </button>
+
+                                            @php
+                                                $commentReplies = $replies->where('replay', $comment->id);
+                                            @endphp
+                                            @if($commentReplies->count() > 0)
+                                                <a href="#" class="text-primary text-decoration-underline show-replies" data-comment-id="{{ $comment->id }}" style="font-size: 1rem;">
+                                                    👁 نمایش پاسخ‌ها
+                                                </a>
+                                            @endif
+                                        </div>
+
+                                        <div class="mt-3 ps-4 replies-list" id="replies-{{ $comment->id }}" style="display: none; margin-right: 1rem; border-right: 2px solid #0d6efd;">
+
+                                            @foreach($commentReplies as $reply)
+                                                <div class="bg-white rounded shadow-sm p-3 mb-3">
+
+                                                    {{-- متن ریپلای اول --}}
+                                                    <p class="text-dark fs-6 mb-2">
+                                                        🗨️ {{ $reply->comment }}
+                                                    </p>
+
+                                                    @php
+                                                        $replyReplies = $replies->where('replay', $reply->id);
+                                                    @endphp
+
+                                                    <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+
+                                                        <form action="{{ route('like', ['id' => $reply->id, 'product' => $product->id]) }}" method="get">
+                                                            <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-3 shadow-sm">
+                                                                👍 {{ $reply->like }}
+                                                            </button>
+                                                        </form>
+
+                                                        <form action="{{ route('dislike', ['id' => $reply->id, 'product' => $product->id]) }}" method="get">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 shadow-sm">
+                                                                👎 {{ $reply->dislike }}
+                                                            </button>
+                                                        </form>
+
+                                                        <button type="button" class="btn btn-sm btn-outline-dark rounded-pill px-3 open-reply-modal shadow-sm" data-comment-id="{{ $reply->id }}">
+                                                            📝 پاسخ دادن
+                                                        </button>
+
+                                                        @if($replyReplies->count() > 0)
+                                                            <a href="#" class="text-success text-decoration-underline show-replies" data-comment-id="{{ $reply->id }}" style="font-size: 1rem;">
+                                                                👁 نمایش پاسخ‌ها
+                                                            </a>
+                                                        @endif
+
+                                                    </div>
+
+                                                    @if($replyReplies->count() > 0)
+                                                        <div class="mt-3 ps-4 replies-list" id="replies-{{ $reply->id }}" style="display: none; margin-right: 1rem; border-right: 2px solid #198754;">
+                                                            @foreach($replyReplies as $reply2)
+                                                                <div class="bg-white rounded shadow-sm p-3 mb-3">
+
+                                                                    <p class="text-dark fs-6 mb-2">
+                                                                        🗨️ {{ $reply2->comment }}
+                                                                    </p>
+
+                                                                    <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+
+                                                                        <form action="{{ route('like', ['id' => $reply2->id, 'product' => $product->id]) }}" method="get">
+                                                                            <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-3 shadow-sm">
+                                                                                👍 {{ $reply2->like }}
+                                                                            </button>
+                                                                        </form>
+
+                                                                        <form action="{{ route('dislike', ['id' => $reply2->id, 'product' => $product->id]) }}" method="get">
+                                                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 shadow-sm">
+                                                                                👎 {{ $reply2->dislike }}
+                                                                            </button>
+                                                                        </form>
+
+                                                                        {{-- حذف دکمه پاسخ دادن برای ریپلای ریپلای ها --}}
+                                                                    </div>
+
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+
+                                                </div>
+                                            @endforeach
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <p class="text-muted">نظری برای این محصول ثبت نشده است.</p>
+                        @endif
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="col-md-4 p-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">
+                                    <i class="bi bi-pencil-square text-dark me-2"></i>ثبت نظر جدید
+                                </h5>
+
+                                <form action="{{ route('add-comment', $product->id) }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="comment" class="form-label">نظر شما</label>
+                                        <textarea name="comment" id="comment" class="form-control" rows="4" required
+                                                  placeholder="نظر خود را بنویسید..."></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="captcha" class="form-label">کد امنیتی</label>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div id="captcha-img" class="rounded border p-2">
+                                                {!! captcha_img('flat') !!}
+                                            </div>
+                                            <button type="button" id="reload" class="btn btn-outline-secondary"
+                                                    title="تغییر کپچا">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" name="captcha" id="captcha" class="form-control mt-3"
+                                               placeholder="کد را وارد کنید" required>
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-dark btn-lg">
+                                            <i class="bi bi-send me-1"></i> ارسال نظر
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- مودال پاسخ (فقط یک بار در صفحه) --}}
+    <div id="reply-modal-overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none"
+         style="z-index: 9999;"></div>
+
+    <div id="reply-modal" class="position-fixed top-50 start-50 translate-middle bg-white shadow rounded p-4 d-none"
+         style="z-index: 10000; width: 90%; max-width: 500px;">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title mb-4">
+                    <i class="bi bi-pencil-square text-dark me-2"></i>ثبت پاسخ جدید
+                </h5>
+
+                <form id="reply-form" method="POST" action="">
+                    @csrf
+                    <input type="hidden" name="parent_id" id="parent_id" value="">
+
+                    <div class="mb-3">
+                        <label for="reply-comment" class="form-label">پاسخ شما</label>
+                        <textarea name="comment" id="reply-comment" class="form-control" rows="4" required
+                                  placeholder="پاسخ خود را بنویسید..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="reply-captcha" class="form-label">کد امنیتی</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <div id="reply-captcha-img" class="rounded border p-2">
+                                {!! captcha_img('flat') !!}
+                            </div>
+                            <button type="button" id="reply-captcha-reload" class="btn btn-outline-secondary"
+                                    title="تغییر کپچا">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <input type="text" name="captcha" id="reply-captcha" class="form-control mt-3"
+                               placeholder="کد را وارد کنید" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark btn-lg">
+                            <i class="bi bi-send me-1"></i> ارسال پاسخ
+                        </button>
+                    </div>
+
+                    <div class="mt-2 text-end">
+                        <button type="button" class="btn btn-outline-danger" id="reply-modal-close">
+                            <i class="bi bi-x-lg"></i> بستن
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-5">
+    <div class="container-fluid">
 
         <div class="row">
             <div class="col-md-12">
@@ -580,7 +901,8 @@
                                                 <div class="input-group product-qty">
                                                 </div>
                                                 <a href="{{route('product-info',$related->id)}}">
-                                                    <button class="btn btn-dark text-uppercase">افزودن به سبد خرید</button>
+                                                    <button class="btn btn-dark text-uppercase">افزودن به سبد خرید
+                                                    </button>
                                                 </a>
                                             </div>
                                         </div>
@@ -596,9 +918,9 @@
 
     </div>
 </section>
-
 <section class="py-5" dir="rtl">
     <div class="container-fluid">
+
         <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-5 text-end">
             <div class="col">
                 <div class="card mb-3 border-0">
@@ -694,12 +1016,18 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+
+        <div class="row mt-5 justify-content-center text-center">
+            <div class="col-12">
+                <p class="mb-2 text-muted">درگاه پرداخت امن با همکاری زرین‌پال</p>
+                <img src="{{ asset('img/zarin.jfif') }}" alt="زرین‌پال" style="height: 150px;">
+            </div>
+        </div>
+
     </div>
 </section>
-
-
 <div id="footer-bottom">
     <div class="container-fluid">
         <div class="row">
@@ -716,6 +1044,73 @@
         crossorigin="anonymous"></script>
 <script src="{{ asset('js/plugins.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
+<script>
+    setTimeout(function () {
+        const alert = document.getElementById('success-alert');
+        if (alert) {
+            alert.classList.add('fade-out');
+            setTimeout(() => alert.remove(), 700);
+        }
+    }, 10000);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        $('#reload').click(function () {
+            $.get('{{ url("/refresh-captcha") }}', function (data) {
+                $('#captcha-img').html(data.captcha);
+            });
+        });
+
+
+        $('#reply-captcha-reload').click(function () {
+            $.get('{{ url("/refresh-captcha") }}', function (data) {
+                $('#reply-captcha-img').html(data.captcha);
+            });
+        });
+
+
+        $('.show-replies').on('click', function (e) {
+            e.preventDefault();
+            const id = $(this).data('comment-id');
+            $('#replies-' + id).slideToggle();
+        });
+
+
+        $('.open-reply-modal').on('click', function () {
+            const commentId = $(this).data('comment-id');
+
+
+            const actionUrlTemplate = '{{ route("add-reply", ["id" => ":id", "product" => $product->id]) }}';
+            const actionUrl = actionUrlTemplate.replace(':id', commentId);
+            $('#reply-form').attr('action', actionUrl);
+
+
+            $('#parent_id').val(commentId);
+
+
+            $('#reply-modal-overlay').removeClass('d-none');
+            $('#reply-modal').removeClass('d-none');
+        });
+
+
+        $('#reply-modal-overlay, #reply-modal-close').on('click', function () {
+            $('#reply-modal-overlay').addClass('d-none');
+            $('#reply-modal').addClass('d-none');
+
+
+            $('#reply-form')[0].reset();
+            $('#reply-form').attr('action', '');
+        });
+    });
+</script>
+
 
 
 </body>

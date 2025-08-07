@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\Messege;
 use App\Models\Shop;
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -86,9 +87,11 @@ class ShopController extends Controller
 
     public function AdManage()
     {
+        $user = session('user');
         $shops = Shop::query()->get()->all();
         $seller = User::query()->get()->where('type', 'seller');
-        return view('main.admin-menu') . view('shop.admin.manage', ['shops' => $shops, 'sellers' => $seller]);
+        $job = Work::query()->where('admin', $user->id)->first();
+        return view("main.admin.$job->job-menu") . view('shop.admin.manage', ['shops' => $shops, 'sellers' => $seller]);
     }
 
     public function change(int $id)

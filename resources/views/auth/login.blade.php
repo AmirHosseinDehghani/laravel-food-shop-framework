@@ -8,10 +8,11 @@
     <!-- فونت‌ها -->
     <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
     <style>
         body, input, button {
-            font-family: 'Lateef', cursive;
+            font-family: "Rubik", sans-serif;
             font-size: 24px;
             direction: rtl;
             margin: 0;
@@ -19,7 +20,7 @@
         }
 
         body {
-            background: linear-gradient(to right, #f3a3bc, #6c5ce7);
+            background: linear-gradient(to right, #dbdbdb, #dbdbdb);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -45,7 +46,7 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #ff5c8d;
+            color: #6995B1;
             font-size: 28px;
             font-weight: bold;
         }
@@ -60,7 +61,7 @@
             padding: 14px 40px 14px 14px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 12px;
             background-color: #f6f6f6;
             transition: all 0.3s ease;
             box-sizing: border-box;
@@ -75,9 +76,9 @@
         }
 
         .input-group input:focus {
-            border-color: #ff5c8d;
+            border-color: #a3be4c;
             outline: none;
-            box-shadow: 0 0 10px rgba(255, 92, 141, 0.5);
+            box-shadow: 0 0 10px #a3be4c;
         }
 
         .password-container {
@@ -99,24 +100,24 @@
         }
 
         .password-container .toggle-password:hover {
-            color: #ff5c8d;
+            color: #a3be4c;
         }
 
         input[type="submit"] {
-            background-color: #ff5c8d;
+            background-color: #6995B1;
             color: white;
             border: none;
             cursor: pointer;
             padding: 14px;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             transition: 0.3s;
             width: 100%;
         }
 
         input[type="submit"]:hover {
-            background-color: #ff4064;
+            background-color: #a3be4c;
             transform: scale(1.05);
         }
 
@@ -147,10 +148,10 @@
         }
 
         .link a, .recovery-link a {
-            color: #ff5c8d;
+            color: #6995B1;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 12px;
         }
 
         .link a:hover, .recovery-link a:hover {
@@ -173,7 +174,7 @@
         }
 
         .refresh-btn {
-            background-color: #6c5ce7;
+            background-color: #6995B1;
             border: none;
             color: white;
             font-size: 20px;

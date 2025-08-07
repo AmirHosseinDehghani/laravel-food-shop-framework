@@ -108,7 +108,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <label for="shop">دسته بندی محصول</label>
+                                            <label for="shop">دسته بندی</label>
                                             <select name="category" class="form-control" required>
                                                 <option value="">انتخاب دسته بندی محصول</option>
                                                 @foreach($categories as $category)
@@ -134,7 +134,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4 mb-3">
-                                            <label for="example-fileinput">Default file input</label>
+                                            <label for="example-fileinput">عکس نمایه محصول</label>
                                             <input name="url" type="file" id="example-fileinput" class="form-control-file" required>
                                         </div>
                                     </div>

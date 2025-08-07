@@ -28,84 +28,70 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <!-- Recent Activity -->
-                        <div class="col-md-12 col-lg-4 mb-4">
-                            <div class="card timeline shadow">
-                                <div class="card-header">
+                    <div class="row justify-content-center align-items-stretch">
+                        <!-- وضعیت سفارشات -->
+                        <div class="col-lg-4 col-md-12 mb-4">
+                            <div class="card shadow h-100">
+                                <div class="card-header bg-primary text-white">
                                     <strong class="card-title">وضعیت سفارشات آخر شما</strong>
-
                                 </div>
-                                <div class="card-body" data-simplebar
-                                     style="height:355px; overflow-y: auto; overflow-x: hidden;">
+                                <div class="card-body" data-simplebar style="max-height: 355px; overflow-y: auto;">
                                     @if(isset($orders) && count($orders) > 0)
                                         @foreach($orders as $order)
-                                            <div class="pb-3 timeline-item item-warning">
-                                                <div class="pl-5">
-                                                    <div class="mb-3"><strong> سفارش شماره :{{$order->id}}</strong></div>
-                                                    <a><h4> {{
-                                                            $order->type == 'pay' ? 'پرداخت شد' :
-                                                            ($order->type == 'dont_pay' ? 'پرداخت نشده' :
-                                                            ($order->type == 'send' ? 'ارسال شد' :
-                                                            ($order->type == 'receive' ? 'دریافت شد' : $order->type)))
-                                                        }}</h4></a>
-                                                </div>
+                                            <div class="timeline-item item-warning border-bottom pb-3 mb-3">
+                                                <strong class="d-block">سفارش شماره: {{$order->id}}</strong>
+                                                <span class="text-muted">
+                                {{
+                                    $order->type == 'pay' ? 'پرداخت شد' :
+                                    ($order->type == 'dont_pay' ? 'پرداخت نشده' :
+                                    ($order->type == 'send' ? 'ارسال شد' :
+                                    ($order->type == 'receive' ? 'دریافت شد' : $order->type)))
+                                }}
+                            </span>
                                             </div>
                                         @endforeach
                                     @else
-                                        <div class="mb-3"><strong>سفارشی ثبت نشده است</strong></div>
+                                        <div class="text-center text-muted">سفارشی ثبت نشده است</div>
                                     @endif
-                                </div> <!-- / .card-body -->
-                            </div> <!-- / .card -->
-                        </div> <!-- / .col-md-6 -->
-                        <div class="col-md-12 col-lg-4">
-                            <div class="row">
-                                <div class="col-md-12 my-4">
-                                    <div class="card shadow">
-                                        <div class="card-body text-center">
-                                            <h4 class=" mb-3">ایمیل<strong></strong></h4>
-                                            <div>
-                                                <h6 class=" mb-3"><strong></strong> {{session('user')->email}}</h6>
-                                            </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div> <!-- /. col -->
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 my-4">
-                                    <div class="card shadow">
-                                        <div class="card-body text-center">
-                                            <h4 class=" mb-3">تعداد سفارشات <strong></strong></h4>
-                                            <div>
-                                                <h5 class=" mb-3"><strong></strong> {{$number}}</h5>
-                                            </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
-                                </div> <!-- /. col -->
-                                <div class="col-md-6 my-4">
-                                    <div class="card shadow">
-                                        <div class="card-body text-center">
-                                            <h4 class=" mb-3">خرید های شما <strong></strong></h4>
-                                            <div>
-                                                <h5 class=" mb-3"><strong></strong>  {{number_format($price) }}  تومان  </h5>
-                                            </div>
-                                        </div> <!-- / .card-body -->
-                                    </div> <!-- / .card -->
                                 </div>
-                            </div> <!-- end section --><!-- end section -->
-                        </div> <!-- Striped rows -->
-                        <div class="col-md-12 col-lg-4">
-                            <div class="row">
-                                <div class="col-md-12 my-4">
-
-                                        <img src="{{ asset('img/logo.jpg') }}" alt="Logo">
-
-                                </div>
-                                </div> <!-- /. col -->
                             </div>
-                        </div> <!-- Striped rows -->
-                    </div> <!-- .row-->
+                        </div>
+
+                        <!-- اطلاعات کاربر و سفارشات -->
+                        <div class="col-lg-4 col-md-12 mb-4">
+                            <div class="card shadow text-center mb-4 h-100">
+                                <div class="card-body">
+                                    <h4 class="mb-3">ایمیل</h4>
+                                    <h6 class="text-primary">{{ session('user')->email }}</h6>
+                                    <hr class="my-4">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h5 class="mb-2">تعداد سفارشات</h5>
+                                            <span class="text-success fw-bold">{{ $number }}</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5 class="mb-2">مجموع خریدها</h5>
+                                            <span class="text-success fw-bold">{{ number_format($price) }} تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- تصویر دسته‌بندی -->
+                        <div class="col-lg-4 col-md-12 mb-4 d-flex justify-content-center align-items-center">
+                            <div class="card shadow h-100 w-100 text-center">
+                                <div class="card-body d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('img/category.png') }}"
+                                         alt="لوگوی دسته‌بندی"
+                                         class="img-fluid rounded shadow"
+                                         style="max-height: 300px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- .row-->
                 </div> <!-- .col-12 -->
             </div> <!-- .row -->
         </div> <!-- .container-fluid -->

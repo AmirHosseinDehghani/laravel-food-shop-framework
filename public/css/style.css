@@ -117,8 +117,8 @@ CSS STRUCTURE:
 
 /* Fonts */
 :root {
-    --body-font: 'Lateef', cursive;
-    --heading-font: 'Lateef', cursive;
+    --body-font: "Rubik", sans-serif;
+    --heading-font: "Rubik", sans-serif;
 }
 
 body {
@@ -133,7 +133,7 @@ body {
 
     --bs-light-rgb: 248, 248, 248;
 
-    --bs-font-sans-serif: 'Lateef', cursive;
+    --bs-font-sans-serif: "Rubik", sans-serif;
     --bs-body-font-family: var(--bs-font-sans-serif);
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
@@ -445,7 +445,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 90px;
 } */
 .banner-ad .banner-content .categories {
-    font-family: 'Lateef', cursive;
+    font-family: "Rubik", sans-serif;
     font-size: 37px;
     text-transform: capitalize;
     color: var(--dark-color);

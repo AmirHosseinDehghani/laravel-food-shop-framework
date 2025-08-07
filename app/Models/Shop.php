@@ -17,6 +17,7 @@ class Shop extends Authenticatable
         'address',
         'bank',
         'password',
+        'salle',
         'recovery_code',
         'type',
     ];

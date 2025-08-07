@@ -27,7 +27,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset($messages) && count($messages) > 0)
+                                      @if(!empty($messages) && count($messages)  >0)
                                             @foreach($messages as $message)
                                                 <tr>
                                                     <td>{{$message->subject}}</td>
@@ -54,7 +54,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="5" class="text-center">فروشگاهی ثبت نشده است</td>
+                                                <td colspan="5" class="text-center">پیغامی ثبت نشده است</td>
                                             </tr>
                                         @endif
                                         </tbody>

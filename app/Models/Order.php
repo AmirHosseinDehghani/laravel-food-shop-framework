@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class Order extends Model
 {
     use HasFactory, Notifiable;
-    protected $fillable = ['buyer', 'baskets', 'price', 'type','ready_products','adders'];
+    protected $fillable = ['buyer', 'baskets', 'price', 'type','ready_products','adders','created_at'];
 
     protected $casts = [
         'baskets' => 'array',

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Basket;
+use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\UserTransaction;
+use App\Models\Work;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
@@ -107,21 +109,6 @@ class OrderController extends Controller
 
         if (isset($result['data']) && $result['data']['code'] == 100) {
             $userId = session('user')->id;
-            $order = Order::query()->where('buyer', $userId)->where('type', 'dont_pay');
-            $products = Product::all();
-            $shops = Shop::all();
-            foreach ($order as $item) {
-                foreach ($item->baskets as $basket) {
-                    foreach ($products as $product) {
-                        if ($product->id == $basket) {
-                            foreach ($shops as $shop) {
-                                $shop->update(['bank' => $shop->bank + $basket->price]);
-                            }
-                        }
-                    }
-                }
-            }
-            $order->update(['type' => 'pay']);
             $order = Order::query()->where('buyer', $userId)->where('type', 'dont_pay')->update(['type' => 'pay']);
             return redirect()->route('manage.order')->with('success', __('OrderControllerLang.payment_success', ['ref_id' => $result['data']['ref_id']]));
         } else {
@@ -207,7 +194,6 @@ class OrderController extends Controller
         return redirect()->route('seller.order')->with('success', __('OrderControllerLang.product_received'));
     }
 
-
     public function factor(int $id)
     {
         $index = 1;
@@ -228,10 +214,66 @@ class OrderController extends Controller
             ->header('Content-Disposition', 'attachment; filename="order.pdf"');
     }
 
-    public function receive(int $id)
+    public function admin()
     {
-       Order::query()->find($id)->update(['type' => 'receive']);
-        return redirect()->route('manage.order')->with('success', __('OrderControllerLang.product_received'));
-    }
-}
+        $orders = Order::all();
+        $sellers = User::query()->where('type', 'seller')->get();
+        $products = Product::all();
+        $number = 0;
+        $ready = 0;
+        foreach ($orders as $order) {
+            foreach ($order->baskets as $basket) {
+                $number = $number + 1;
+            }
+            if (!empty($order->ready_products)) {
+                foreach ($order->ready_products as $ready_product) {
+                    $ready = $ready + 1;
+                }
+            }
+            $buyer = User::find($order->buyer);
+            $order->number = $number;
+            $order->ready = $ready;
+            $number = $ready = 0;
+        }
+        $user = session('user');
+        $job = Work::query()->where('admin', $user->id)->first();
+        return view("main.admin.$job->job-menu") . view("order.admin", [
+                'buyer' => $buyer, 'sellers' => $sellers, 'products' => $products, 'orders' => $orders]);
 
+    }
+
+    public function alarm(int $id)
+    {
+        $order = Order::findOrFail($id);
+
+        $readyProducts = $order->ready_products ?? [];
+        $basketProducts = $order->baskets ?? [];
+
+        foreach ($basketProducts as $productId) {
+
+            if (in_array($productId, $readyProducts)) {
+                continue;
+            }
+
+            $product = Product::find($productId);
+            if (!$product) continue;
+
+            $existingWarningsCount = Message::where('subject', "سفارش $order->id")
+                ->where('receiver', $product->seller)
+                ->count();
+            if ($existingWarningsCount < 1) {
+                Message::create([
+                    'sender' => session('user')->id,
+                    'receiver' => $product->seller,
+                    'subject' => "سفارش $order->id",
+                    'text' => "شما به دلیل عدم ارسال محصول مربوط به سفارش شماره $order->id اخطار دریافت کرده‌اید. لطفاً هرچه سریع‌تر سفارش را ارسال کنید.",
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.order')->with('success', 'اخطارها با موفقیت ارسال شدند.');
+    }
+
+
+
+}

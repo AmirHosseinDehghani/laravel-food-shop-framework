@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
+use App\Models\Work;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function form()
     {
-        return view('main.admin-menu') . view('category.form');
+        $user = session('user');
+        $job = Work::query()->where('admin', $user->id)->first();
+        return view("main.admin.$job->job-menu") . view('category.form');
     }
 
     public function store(CategoryStoreRequest $request)
@@ -23,7 +26,9 @@ class CategoryController extends Controller
 
     public function manage()
     {
+        $user = session('user');
+        $job = Work::query()->where('admin', $user->id)->first();
         $categories = Category::all();
-        return view('main.admin-menu') . view('category.manage',['categories'=>$categories]);
+        return view("main.admin.$job->job-menu") . view('category.manage',['categories'=>$categories]);
     }
 }

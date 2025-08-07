@@ -11,6 +11,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="https://fonts.googleapis.com/css2?family=Vazir&family=Lateef&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -27,34 +28,32 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <style>
         body {
             font-size: 25px;
         }
-
-        @keyframes highlight {
-            0% {
-                box-shadow: 0 0 0px #ff9800;
-            }
-            50% {
-                box-shadow: 0 0 20px #ff9800;
-            }
-            100% {
-                box-shadow: 0 0 0px #ff9800;
-            }
+        .page-item .page-link {
+            color: #3ad29f;
+            border-radius: 50px;
+            margin: 0 5px;
+            transition: all 0.3s;
+            font-size: 20px;
         }
 
-        .product-box.highlighted {
-            animation: highlight 1.5s ease-in-out infinite;
-            background-color: #fff3e0;
-            border-radius: 12px;
-            z-index: 10;
-            transition: transform 0.5s ease;
+        .page-item.active .page-link {
+            background-color: #3ad29f;
+            border-color:#3ad29f;
+            color: white;
         }
 
-        .product-box.highlighted:hover {
-            transform: scale(1.03);
+        .page-item.disabled .page-link {
+            color: #aaa;
         }
+
+
     </style>
 
 </head>
@@ -303,29 +302,50 @@
                                            data-bs-toggle="dropdown" aria-expanded="false">صفحه ها</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a href="{{route('home')}}" class="dropdown-item">صفحه اصلی </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ورود </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ثبت نام </a></li>
-                                            <li><a href="index.html" class="dropdown-item">قوانین </a></li>
-                                            <li><a href="index.html" class="dropdown-item">بلاگ ها</a></li>
+                                            <li><a href="{{route('dashboard')}}" class="dropdown-item">داشبورد </a></li>
+                                            <li><a href="{{route('logout')}}" class="dropdown-item">خروج </a></li>
+                                            <li><a href="{{route('rules')}}" class="dropdown-item">قوانین </a></li>
+                                            <li><a href="{{route('about')}}" class="dropdown-item">درباره ما </a></li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{route('most-salle')}}" class="nav-link">پرفروش ها</a>
+                                        <a href="{{ route('most-salle') }}" class="nav-link">
+                                            <i class="fas fa-star"></i> پرفروش‌ها
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('most-off')}}" class="nav-link">فروش شگفت انگیز</a>
+                                        <a href="{{ route('most-off') }}" class="nav-link">
+                                            <i class="fas fa-bolt"></i> فروش شگفت‌انگیز
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-gavel"></i> قوانین
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-shopping-cart"></i> سبد خرید
+                                        </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="#brand" class="nav-link">قوانین</a>
+                                        <a href="{{ route('about') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> درباره ما
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#brand" class="nav-link">درباره ما</a>
+                                        <a href="{{ route('make.conversion') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> ارتباط با ما
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#blog" class="nav-link">بلاگ ها</a>
+                                        <a href="{{ route('blog') }}" class="nav-link">
+                                            <i class="fas fa-blog"></i> بلاگ‌ها
+                                        </a>
                                     </li>
+
                                 </ul>
 
                             </div>
@@ -409,29 +429,44 @@
                                            data-bs-toggle="dropdown" aria-expanded="false">صفحه ها</a>
                                         <ul class="dropdown-menu" aria-labelledby="pages">
                                             <li><a href="{{route('home')}}" class="dropdown-item">صفحه اصلی </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ورود </a></li>
-                                            <li><a href="index.html" class="dropdown-item">ثبت نام </a></li>
-                                            <li><a href="index.html" class="dropdown-item">قوانین </a></li>
-                                            <li><a href="index.html" class="dropdown-item">بلاگ ها</a></li>
+                                            <li><a href="{{route('login')}}" class="dropdown-item">ورود </a></li>
+                                            <li><a href="{{route('register')}}" class="dropdown-item">ثبت نام </a></li>
+                                            <li><a href="{{route('rules')}}" class="dropdown-item">قوانین </a></li>
+                                            <li><a href="{{route('blog')}}" class="dropdown-item">بلاگ ها</a></li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{route('most-salle')}}" class="nav-link">پرفروش ها</a>
+                                        <a href="{{ route('most-salle') }}" class="nav-link">
+                                            <i class="fas fa-star"></i> پرفروش‌ها
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('most-off')}}" class="nav-link">فروش شگفت انگیز</a>
+                                        <a href="{{ route('most-off') }}" class="nav-link">
+                                            <i class="fas fa-bolt"></i> فروش شگفت‌انگیز
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('rules') }}" class="nav-link">
+                                            <i class="fas fa-gavel"></i> قوانین
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('about') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> درباره ما
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('make.conversion') }}" class="nav-link">
+                                            <i class="fas fa-info-circle"></i> ارتباط با ما
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('blog') }}" class="nav-link">
+                                            <i class="fas fa-blog"></i> بلاگ‌ها
+                                        </a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a href="#brand" class="nav-link">قوانین</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#brand" class="nav-link">درباره ما</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#blog" class="nav-link">بلاگ ها</a>
-                                    </li>
                                 </ul>
 
                             </div>
@@ -465,42 +500,39 @@
                             <div
                                 class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                 @foreach($products as $product)
-                                    <form action="{{ route('add.basket', $product->id) }}" method="get">
+                                    <div class="col product-box" data-name="{{ $product->name }}"
+                                         id="product-{{ $product->id }}">
+                                        <div class="product-item">
+                                            @if(!empty($product->off))
+                                                <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
+                                            @endif
+                                            <figure>
+                                                <a href="#" title="{{ $product->name }}">
+                                                    <img style="width: 205px; height: 210px"
+                                                         src="{{ asset("storage/$product->url") }}"
+                                                         class="tab-image">
+                                                </a>
+                                            </figure>
+                                            <h3>{{ $product->name }}</h3>
+                                            <p class="text-muted small">{{ $product->description }}</p>
+                                            <span class="price">{{ number_format($product->price) }} تومان</span>
+                                            <span
+                                                class="price">{{ $product->type == 'kilo' ? 'کیلویی' : 'بسته‌ای' }}</span>
+                                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                                <div class="input-group product-qty"></div>
 
-                                        <div class="col product-box" data-name="{{ $product->name }}"
-                                             id="product-{{ $product->id }}">
-                                            <div class="product-item">
-                                                @if(!empty($product->off))
-                                                    <span class="badge bg-success position-absolute m-3">{{ $product->off }}%</span>
-                                                @endif
-                                                <figure>
-                                                    <a href="#" title="Product Title">
-                                                        <img style="width: 205px; height: 210px"
-                                                             src="{{ asset("storage/$product->url") }}"
-                                                             class="tab-image">
-                                                    </a>
-                                                </figure>
-                                                <h3>{{ $product->name }}</h3>
-                                                <span class="price">{{ number_format($product->price) }} تومان</span>
-                                                @if($product->type == 'kilo')
-                                                    <span class="price">کیلویی</span>
-                                                @else
-                                                    <span class="price">بسته‌ای</span>
-                                                @endif
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="input-group product-qty">
-
-                                                    </div>
-
-                                                    <a>
-                                                        <button class="btn btn-dark text-uppercase">افزودن به سبد خرید
-                                                        </button>
-                                                    </a>
-                                                </div>
+                                                <a href="{{ route('product-info', $product->id) }}"
+                                                   class="btn btn-dark text-uppercase">
+                                                    افزودن به سبد خرید
+                                                </a>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 @endforeach
+                            </div>
+
+                            <div class="mt-4 d-flex justify-content-center">
+                                {{ $products->links('components.pagination') }}
                             </div>
                         </div>
 
@@ -516,6 +548,7 @@
 
 <section class="py-5" dir="rtl">
     <div class="container-fluid">
+
         <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-5 text-end">
             <div class="col">
                 <div class="card mb-3 border-0">
@@ -611,8 +644,16 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
+        {{-- لوگوی زرین‌پال --}}
+        <div class="row mt-5 justify-content-center text-center">
+            <div class="col-12">
+                <p class="mb-2 text-muted">درگاه پرداخت امن با همکاری زرین‌پال</p>
+                <img src="{{ asset('img/zarin.jfif') }}" alt="زرین‌پال" style="height: 150px;">
+            </div>
+        </div>
+
     </div>
 </section>
 
